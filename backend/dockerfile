@@ -1,0 +1,18 @@
+# Utiliser l'image officielle Node.js 18
+FROM node:18
+
+# Create and change to the app directory
+WORKDIR /app
+
+# Install app dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the app source code
+COPY . .
+
+# Expose the port the app runs on
+EXPOSE 5000
+
+# Start the app
+CMD ["npm", "run", "dev"]

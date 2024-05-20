@@ -2,8 +2,8 @@ name: Check Branch Name
 
 on:
   push:
-    branches:
-      - '*'
+    branches-ignore:
+      - 'main'
 
 jobs:
   check-branch-name:

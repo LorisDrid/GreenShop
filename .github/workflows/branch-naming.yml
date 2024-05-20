@@ -1,0 +1,28 @@
+name: Check Branch Name
+
+on:
+  push:
+    branches-ignore:
+      - 'main'
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Check branch name
+        run: |
+          echo "Checking branch name: ${{ github.ref_name }}"
+          
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "Skipping branch name check for the 'main' branch."
+            exit 0
+          fi
+          
+          if [[ ! "${{ github.ref_name }}" =~ ^(feature|bugfix|hotfix)/ ]]; then
+            echo "Invalid branch name '${{ github.ref_name }}'. It must start with 'feature/', 'bugfix/', or 'hotfix/'."
+            exit 1
+          fi

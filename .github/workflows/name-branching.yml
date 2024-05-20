@@ -1,0 +1,28 @@
+name: Check Branch Name
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  check-branch-name:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+
+    - name: Get branch name
+      id: get_branch
+      run: echo "##[set-output name=branch_name;]${GITHUB_REF#refs/heads/}"
+
+    - name: Check branch name
+      run: |
+        branch_name=${{ steps.get_branch.outputs.branch_name }}
+        echo "Checking branch name: $branch_name"
+
+        if [[ ! "$branch_name" =~ ^(feature|bugfix|hotfix)/ ]]; then
+          echo "Invalid branch name '$branch_name'. It must start with 'feature/', 'bugfix/', or 'hotfix/'."
+          exit 1
+        fi

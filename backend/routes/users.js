@@ -1,21 +1,23 @@
+// routes/users.js
 const express = require('express');
 const router = express.Router();
-const userSchema = require('../models/user');
+const User = require('../models/user');
 const { ObjectId } = require('mongodb');
 const { connectToDatabase } = require('../database');
 
 // Créer un nouvel utilisateur
-router.post('/', async (req, res) => {
-  const { email, phoneNumber, password } = req.body;
+async function createUser(req, res) {
+  const { email, phoneNumber, password, role } = req.body;
   const client = await connectToDatabase();
   const db = client.db('greenshop_database');
   const collection = db.collection('users');
-  const user = { email, phoneNumber, password };
+  const user = { email, phoneNumber, password, role };
   await collection.insertOne(user);
   res.status(201).json(user);
-});
+}
 
-// Récupérer tous les utilisateurs
+// Autres routes pour récupérer, mettre à jour et supprimer des utilisateurs
+
 router.get('/', async (req, res) => {
   const client = await connectToDatabase();
   const db = client.db('greenshop_database');
@@ -24,7 +26,6 @@ router.get('/', async (req, res) => {
   res.json(users);
 });
 
-// Récupérer un utilisateur par ID
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const client = await connectToDatabase();
@@ -37,16 +38,15 @@ router.get('/:id', async (req, res) => {
   res.json(user);
 });
 
-// Mettre à jour un utilisateur par ID
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { email, phoneNumber, password } = req.body;
+  const { email, phoneNumber, password, role } = req.body;
   const client = await connectToDatabase();
   const db = client.db('greenshop_database');
   const collection = db.collection('users');
   const result = await collection.updateOne(
     { _id: new ObjectId(id) },
-    { $set: { email, phoneNumber, password } }
+    { $set: { email, phoneNumber, password, role } }
   );
   if (result.modifiedCount === 0) {
     return res.status(404).json({ error: 'User not found' });
@@ -54,7 +54,6 @@ router.put('/:id', async (req, res) => {
   res.json({ message: 'User updated successfully' });
 });
 
-// Supprimer un utilisateur par ID
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   const client = await connectToDatabase();
@@ -67,4 +66,7 @@ router.delete('/:id', async (req, res) => {
   res.json({ message: 'User deleted successfully' });
 });
 
-module.exports = router;
+module.exports = {
+  router,
+  createUser,
+};

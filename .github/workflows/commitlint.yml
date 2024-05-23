@@ -1,4 +1,4 @@
-name: Commitlint
+name: Commit Message Check
 
 on:
   push:
@@ -6,21 +6,29 @@ on:
       - 'feat-*'
 
 jobs:
-  commitlint:
+  check-commit-message:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Commitlint check
-        uses: Wizcorp/commitlint-check-action@v2
+      - name: Check out repository
+        uses: actions/checkout@v3
         with:
-          config: '{ "extends": ["@commitlint/config-conventional"], "rules": { "type-enum": [2, "always", ["feat", "fix", "docs", "style", "refactor", "test", "chore", "perf"]], "scope-empty": [2, "never"], "subject-case": [2, "always", "sentence-case"], "header-max-length": [2, "always", 72] } }'
+          fetch-depth: 0
 
-      - name: Check commitlint result
+      - name: Check commit message format
         run: |
-          if [ ${{ steps.commitlint.outputs.commitlint }} != "true" ]; then
-            echo "::error::Le message de commit ne respecte pas les règles de nommage. Un exemple de nommage correct est 'feat(nom_de_la_feature): description_du_commit #123'."
+          # Récupérer le message du dernier commit
+          commit_message=$(git log -1 --pretty=%B)
+          
+          # Définir le format requis pour le message de commit
+          required_format="^feat\([a-zA-Z0-9_-]+\): .+ #\d+$"
+          
+          # Vérifier si le message de commit correspond au format requis
+          if ! [[ "$commit_message" =~ $required_format ]]; then
+            echo "Le message de commit ne respecte pas le format requis."
+            echo "Format requis : feat(nom_de_la_feature): description_du_commit #123"
+            echo "Exemples :"
+            echo "  feat(authentication): ajouter la fonctionnalité de connexion #123"
+            echo "  feat(search): améliorer la recherche par mot-clé #456"
             exit 1
           fi

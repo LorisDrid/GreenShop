@@ -1,0 +1,26 @@
+name: Commitlint
+
+on:
+  push:
+    branches:
+      - 'feat-*'
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Commitlint check
+        uses: Wizcorp/commitlint-check-action@v2
+        with:
+          config: '{ "extends": ["@commitlint/config-conventional"], "rules": { "type-enum": [2, "always", ["feat", "fix", "docs", "style", "refactor", "test", "chore", "perf"]], "scope-empty": [2, "never"], "subject-case": [2, "always", "sentence-case"], "header-max-length": [2, "always", 72] } }'
+
+      - name: Check commitlint result
+        run: |
+          if [ ${{ steps.commitlint.outputs.commitlint }} != "true" ]; then
+            echo "::error::Le message de commit ne respecte pas les règles de nommage. Un exemple de nommage correct est 'feat(nom_de_la_feature): description_du_commit #123'."
+            exit 1
+          fi

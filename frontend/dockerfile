@@ -1,17 +1,21 @@
-# Étape de développement
-FROM node:18-alpine
+# Utiliser l'image officielle Node.js 18
+FROM node:18
 
-# Définir le répertoire de travail
+# Create and change to the app directory
 WORKDIR /app
 
-# Copier les fichiers de l'application
-COPY . .
-
-# Installer les dépendances
+# Install app dependencies
+COPY package*.json ./
 RUN npm install
 
-# Exposer le port 3000
+# Copy the app source code
+COPY . .
+
+# Build the app
+RUN npm run build
+
+# Expose the port the app runs on
 EXPOSE 3000
 
-# Démarrer l'application en mode développement
-CMD ["npm", "start"]
+# Start the app
+CMD ["npm", "run", "start"]

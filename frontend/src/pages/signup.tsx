@@ -1,6 +1,7 @@
 // src/pages/signup.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import styles from "./Signup.module.css";
 
 const SignupPage = () => {
@@ -12,6 +13,7 @@ const SignupPage = () => {
     role: "buyer",
     adminSecret: "",
   });
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -25,8 +27,25 @@ const SignupPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Logique d'inscription
-    navigate("/");
+    setError(null);
+
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/auth/signup`,
+        formData,
+      );
+      navigate("/");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        if (err.response && err.response.data && err.response.data.error) {
+          setError(err.response.data.error);
+        } else {
+          setError("An unexpected error occurred");
+        }
+      } else {
+        setError("An unexpected error occurred");
+      }
+    }
   };
 
   return (
@@ -87,6 +106,7 @@ const SignupPage = () => {
               />
             </label>
           )}
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <button type="submit">Signup</button>
         </form>
       </div>

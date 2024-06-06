@@ -9,6 +9,7 @@ import {
 import logo from "./logo.svg";
 import "./App.css";
 import SignupPage from "./pages/signup";
+import LoginPage from "./pages/login";
 
 function App() {
   return (
@@ -21,11 +22,15 @@ function App() {
               <li>
                 <NavButton label="Signup" to="/signup" />
               </li>
+              <li>
+                <NavButton label="Login" to="/login" />
+              </li>
             </ul>
           </nav>
         </header>
         <Routes>
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
     </Router>

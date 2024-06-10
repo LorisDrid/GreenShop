@@ -35,4 +35,9 @@ const itemSchema = new Schema({
 
 const Item = mongoose.model("Item", itemSchema);
 
+// Create the item collection
+Item.createCollection().then(() => {
+  console.log("💾[DB] Item collection created !");
+});
+
 module.exports = Item;

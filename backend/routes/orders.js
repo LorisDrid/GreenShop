@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const { connectToDatabase } = require("../database");
-const { ObjectId } = require("mongodb");
 const Order = require("../models/order"); // Importer le modèle Order
 
 // Créer une nouvelle commande

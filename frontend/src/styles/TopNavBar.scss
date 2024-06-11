@@ -1,0 +1,28 @@
+@import './variables';
+
+.topNavBar {
+  background-color: $secondary-color;
+  color: $light-color;
+  padding: 0.5rem 1rem;
+
+  a {
+    color: $light-color;
+    text-decoration: none;
+    margin: 0 0.5rem;
+
+    &.selected {
+      font-weight: bold;
+      border-bottom: $light-color 2px solid;
+    }
+
+    &:visited {
+      color: $light-color;
+    }
+
+    &.selected {
+      font-weight: bold;
+      border-bottom: $light-color 1px solid;
+      padding-bottom: 3px;
+    }
+  }
+}

@@ -3,7 +3,8 @@
 .topNavBar {
   background-color: $secondary-color;
   color: $light-color;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem $body-margin-border;
+  font-size: 0.8em;
 
   a {
     color: $light-color;
@@ -24,5 +25,9 @@
       border-bottom: $light-color 1px solid;
       padding-bottom: 3px;
     }
+  }
+
+  .newsletter svg {
+    fill: $light-color;
   }
 }

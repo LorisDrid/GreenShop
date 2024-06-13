@@ -1,33 +1,35 @@
-// routes/auth.js
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const rateLimit = require("express-rate-limit");
+const ExpressBrute = require("express-brute");
 const usersRouter = require("./users");
 const User = require("../models/user");
 
 router.use(cookieParser());
 
-// Méthode de validation du token
-router.post("/validate-token", (req, res) => {
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).json({ error: "Missing token" });
-  }
-
-  jwt.verify(token.split(" ")[1], process.env.JWT_SECRET, (err) => {
-    if (err) {
-      // Si le token est invalide, essayer de rafraîchir le token
-      refreshToken(req, res);
-    } else {
-      // Si le token est valide, renvoyer un succès avec un message
-      res.status(200).json({ message: "Token is valid" });
-    }
-  });
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 50,
+  message: "Too many requests, please try again later",
 });
-// Route d'inscription (sign up)
+
+router.use(globalLimiter);
+
+const store = new ExpressBrute.MemoryStore();
+const bruteforce = new ExpressBrute(store, {
+  freeRetries: 5,
+  minWait: 5 * 60 * 1000,
+  maxWait: 15 * 60 * 1000,
+  failCallback: (req, res, next, nextValidRequestDate) => {
+    res.status(429).json({
+      error: "Too many failed login attempts, please try again later",
+    });
+  },
+});
+
 router.post("/signup", async (req, res) => {
   const { email, phoneNumber, password, role, adminSecret } = req.body;
 
@@ -57,7 +59,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", bruteforce.prevent, async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -72,7 +74,9 @@ router.post("/login", async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
-    // Création du token d'accès
+
+    bruteforce.reset(req.ip);
+
     const accessToken = jwt.sign(
       {
         userId: user._id,
@@ -80,25 +84,22 @@ router.post("/login", async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "3m", // Durée de validité du token d'accès
+        expiresIn: "3m",
       },
     );
 
-    // Création du token de rafraîchissement
     const refreshToken = jwt.sign(
       {
         userId: user._id,
       },
       process.env.REFRESH_TOKEN_SECRET,
       {
-        expiresIn: "1d", // Durée de validité du token de rafraîchissement
+        expiresIn: "1d",
       },
     );
 
-    // Assigner le token de rafraîchissement dans un cookie
     res.cookie("refreshToken", refreshToken, { httpOnly: true });
 
-    // Envoi du token d'accès dans la réponse
     res.json({ accessToken });
   } catch (error) {
     console.error("Error logging in:", error);
@@ -106,7 +107,22 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Fonction pour rafraîchir le token
+router.post("/validate-token", (req, res) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ error: "Missing token" });
+  }
+
+  jwt.verify(token.split(" ")[1], process.env.JWT_SECRET, (err) => {
+    if (err) {
+      refreshToken(req, res);
+    } else {
+      res.status(200).json({ message: "Token is valid" });
+    }
+  });
+});
+
 function refreshToken(req, res) {
   const refreshToken = req.cookies.refreshToken;
 
@@ -118,10 +134,9 @@ function refreshToken(req, res) {
     if (err) {
       return res.status(403).json({ error: "Invalid refresh token" });
     } else {
-      // Si le token de rafraîchissement est valide, générer un nouveau token d'accès
       const accessToken = jwt.sign(
         {
-          username: decoded.username, // Utilisez les informations du token de rafraîchissement
+          username: decoded.username,
           email: decoded.email,
         },
         process.env.JWT_SECRET,

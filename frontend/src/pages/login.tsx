@@ -21,10 +21,18 @@ const Login: React.FC = () => {
       navigate("/");
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        if (err.response && err.response.data && err.response.data.error) {
-          setError(err.response.data.error);
+        if (err.response) {
+          if (err.response.status === 429) {
+            setError("Too many requests, please try again later.");
+          } else if (err.response.status === 401) {
+            setError("Invalid credentials, please try again.");
+          } else if (err.response.data && err.response.data.error) {
+            setError(err.response.data.error);
+          } else {
+            setError("An unexpected error occurred");
+          }
         } else {
-          setError("An unexpected error occurred");
+          setError("No response from server, please try again.");
         }
       } else {
         setError("An unexpected error occurred");

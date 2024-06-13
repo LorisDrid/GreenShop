@@ -5,7 +5,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-const port = process.env.PORT || 5001;
+const port = process.env.PORT;
 const mongoURI = process.env.MONGODB_URI;
 const corsOptions = {
   origin: process.env.CORS_ORIGIN || "http://localhost:3000",
@@ -22,7 +22,7 @@ mongoose
     console.log("✅ Connected to MongoDB successfully !");
 
     const usersRouter = require("./routes/users").router;
-    app.use("/user s", usersRouter);
+    app.use("/users", usersRouter);
 
     const itemsRouter = require("./routes/items");
     app.use("/items", itemsRouter);

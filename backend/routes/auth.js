@@ -30,6 +30,22 @@ const bruteforce = new ExpressBrute(store, {
   },
 });
 
+const validatePassword = (password) => {
+  const maxLength = 20;
+  const regex =
+    /^(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=<>?])[A-Za-z\d!@#$%^&*()_\-+=<>?]{8,}$/;
+
+  if (password.length > maxLength) {
+    return { isValid: false, error: "Password too long" };
+  }
+
+  if (!regex.test(password)) {
+    return { isValid: false, error: "Invalid password format" };
+  }
+
+  return { isValid: true };
+};
+
 router.post("/signup", async (req, res) => {
   const { email, phoneNumber, password, role, adminSecret } = req.body;
 
@@ -42,6 +58,11 @@ router.post("/signup", async (req, res) => {
     adminSecret !== process.env.ADMIN_SECRET_KEY
   ) {
     return res.status(403).json({ error: "Invalid admin secret" });
+  }
+
+  const passwordValidation = validatePassword(password);
+  if (!passwordValidation.isValid) {
+    return res.status(400).json({ error: passwordValidation.error });
   }
 
   try {

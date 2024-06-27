@@ -16,7 +16,7 @@ const User = mongoose.model("User", userSchema);
 
 // Create the user collection
 User.createCollection().then(() => {
-  console.log("💾[DB] User collection created !");
+  console.log("💾[DB]👫 User collection created !");
 });
 
 module.exports = User;

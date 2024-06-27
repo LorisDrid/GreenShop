@@ -1,0 +1,104 @@
+@import 'variables';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary-color: #{$primary-color};
+    --secondary-color: #{$secondary-color};
+    --third-color: #{$third-color};
+}
+
+body {
+    margin: 0;
+    font-family: 'Gotham', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+    font-family: 'Gotham', sans-serif;
+    border-radius: $border-radius-high;
+    margin: 0.5rem;
+    padding: 0.6rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    font-size: $font-size-large;
+    transition: all 0.3s ease;
+
+    &:hover {
+        scale: 1.05;
+    }
+}
+
+h1 {
+    font-weight: 900;
+    font-size: 3.5rem;
+    line-height: normal;
+}
+
+h2 {
+    font-weight: 900;
+    font-size: 2.5rem;
+    line-height: normal;
+}
+
+.radix-themes {
+    --default-font-family: "Gotham", sans-serif !important;
+    --heading-font-family: "Gotham", sans-serif !important;
+    --code-font-family: "Gotham", monospace !important;
+    --strong-font-family: "Gotham", sans-serif !important;
+    --em-font-family: "Gotham", sans-serif !important;
+    --quote-font-family: "Gotham", sans-serif !important;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('fonts/Gotham-Medium.woff2') format('woff2'),
+    url('fonts/Gotham-Medium.woff') format('woff'),
+    url('fonts/Gotham-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('fonts/Gotham-Book.woff2') format('woff2'),
+    url('fonts/Gotham-Book.woff') format('woff'),
+    url('fonts/Gotham-Book.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('fonts/Gotham-Light.woff2') format('woff2'),
+    url('fonts/Gotham-Light.woff') format('woff'),
+    url('fonts/Gotham-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('fonts/Gotham-Bold.woff2') format('woff2'),
+    url('fonts/Gotham-Bold.woff') format('woff'),
+    url('fonts/Gotham-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('fonts/Gotham-Black.woff2') format('woff2'),
+    url('fonts/Gotham-Black.woff') format('woff'),
+    url('fonts/Gotham-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+

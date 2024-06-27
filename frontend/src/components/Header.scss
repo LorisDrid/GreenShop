@@ -1,4 +1,4 @@
-@import './variables';
+@import '../variables';
 
 header {
   padding: 0 $body-margin-border;
@@ -6,7 +6,7 @@ header {
   color: $dark-color;
   border-bottom: $primary-color 1px solid;
 
-  .header-container{
+  .header-container {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     gap: 1rem;
@@ -69,6 +69,8 @@ header {
       font-weight: bold;
       display: flex;
       justify-content: center;
+      align-items: center;
+      text-align: center;
 
       &:hover {
         color: $light-color !important;

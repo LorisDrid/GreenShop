@@ -1,0 +1,61 @@
+@import '../variables';
+
+.home-container {
+  min-height: 100vh;
+
+  main {
+    padding: 2rem $body-margin-border;
+
+    .home-hero-section {
+      text-align: center;
+      margin-bottom: 2rem;
+
+      .home-hero-text {
+        width: 55%;
+        min-width: 590px;
+      }
+
+      .home-header-img {
+        width: 45%;
+        height: auto;
+        border-radius: 40px;
+      }
+
+      .home-title {
+        color: $primary-color;
+        margin-bottom: 0;
+        position: relative;
+
+        svg {
+          position: absolute;
+          filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));
+          -webkit-filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));
+        }
+
+        .home-svg-arrow {
+          top: -25px;
+          right: -65px;
+        }
+
+        .home-svg-circle {
+          top: 50px;
+          right: 356px;
+        }
+      }
+
+      .home-subtitle {
+        color: $grey-500;
+        font-size: $font-size-large;
+      }
+
+      .home-subtitle-btn {
+        background-color: $third-color;
+        color: $light-color;
+
+        &:hover {
+          background-color: $primary-color;
+        }
+      }
+    }
+  }
+}

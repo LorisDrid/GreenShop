@@ -1,0 +1,52 @@
+@import '../variables';
+
+.section-container {
+  padding: $body-margin-border;
+  background-color: $third-color;
+
+  .section-title {
+    color: $light-color;
+  }
+
+  .section-subtitle {
+    color: $grey-500;
+  }
+}
+
+.article-list {
+  width: 100%;
+
+  .article-title {
+    font-size: 1.2rem;
+    margin: 0.2rem 0;
+  }
+
+  .article-image {
+    aspect-ratio: 1/1;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: $border-radius-low;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .article-previous-price {
+    color: $grey-500;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+    line-height: 1.7rem;
+  }
+
+  .article-price, .article-price-discount {
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .article-price-discount {
+    color: $secondary-color;
+  }
+
+  .article-label-compare {
+    color: $grey-500;
+  }
+}

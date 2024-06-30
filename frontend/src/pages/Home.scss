@@ -51,11 +51,18 @@
       .home-subtitle-btn {
         background-color: $third-color;
         color: $light-color;
-
-        &:hover {
-          background-color: $primary-color;
-        }
       }
+    }
+  }
+
+  .section-signature {
+    padding: $body-margin-border;
+    background-image: url('../assets/background-signature.jpg');
+
+    h4 {
+      color: $light-color;
+      text-align: center;
+      width: 80%;
     }
   }
 }

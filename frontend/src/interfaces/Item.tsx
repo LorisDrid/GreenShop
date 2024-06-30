@@ -10,4 +10,14 @@ export interface Item {
   rateCount: number;
   createdAt: string;
   modifiedAt: string;
+  labels: Label[];
+  greenScore: string;
+}
+
+export interface Label {
+  _id: string;
+  name: string;
+  description: string;
+  image_url: string;
+  category: string;
 }

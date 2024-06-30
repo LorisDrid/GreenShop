@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./MostWantedProducts.scss";
+import "./NewArrival.scss";
 import axios from "axios";
 import {
   Avatar,
@@ -16,7 +16,7 @@ import { convertPrice } from "../utils/CurrencyUtils";
 import { useCurrency } from "../contexts/LanguagesCurrencyContext";
 import Logo from "../assets/Logo";
 
-function MostWantedProducts() {
+function NewArrival() {
   const [items, setItems] = useState<Item[]>([]);
   const [imageLoading, setImageLoading] = useState(true);
   const { currency } = useCurrency();
@@ -29,7 +29,12 @@ function MostWantedProducts() {
         );
         const items: Item[] = response.data;
         if (items.length > 0) {
-          items.sort((a, b) => b.rate - a.rate);
+          // Sort by the most recent
+          items.sort((a, b) => {
+            return (
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            );
+          });
           const filteredItems = items.filter((item) => {
             try {
               require(`../assets/products/${item.image}`);
@@ -52,9 +57,11 @@ function MostWantedProducts() {
   }
 
   return (
-    <section className="section-container flex flex-col justify-evenly items-center gap-6">
-      <h2 className="section-title text-green">Our Most Wanted Products</h2>
-      <p className="section-subtitle">Good for Environment, Good for You</p>
+    <section className="new-section-container flex flex-col justify-evenly gap-6">
+      <h2 className="section-title text-green">News Arrival</h2>
+      <p className="section-subtitle">
+        Be the first to have the first-call product
+      </p>
       <div className="w-full flex justify-between gap-4">
         {items.map((item: any, index: number) => (
           <article key={index}>
@@ -219,8 +226,9 @@ function MostWantedProducts() {
           </article>
         ))}
       </div>
+      <button className="btn-see-more">See More</button>
     </section>
   );
 }
 
-export default MostWantedProducts;
+export default NewArrival;

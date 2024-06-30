@@ -1,0 +1,23 @@
+@import '../variables';
+
+.why-choose-section {
+  background-color: $light-color;
+  padding: $body-margin-border;
+
+  .why-choose-title {
+    position: relative;
+
+    .why-choose-piles {
+      position: absolute;
+      fill: $primary-color;
+      z-index: 0;
+      top: 0;
+    }
+
+    h1 {
+      z-index: 1;
+      padding-bottom: 5px;
+      margin-right: 8px;
+    }
+  }
+}

@@ -1,11 +1,11 @@
 @import '../variables';
 
-.section-container {
+.new-section-container {
   padding: $body-margin-border;
-  background-color: $third-color;
+  background-color: $light-color;
 
   .section-title {
-    color: $light-color;
+    color: $third-color;
   }
 
   .section-subtitle {
@@ -114,4 +114,12 @@ article {
     width: auto;
     object-fit: cover;
   }
+}
+
+.btn-see-more {
+  background-color: $third-color;
+  color: $light-color;
+  width: fit-content;
+  align-self: center;
+  margin: 2rem 0;
 }

@@ -64,7 +64,7 @@ const TopNavHeader: React.FC<SelectedProps> = ({ selected }) => {
       </a>
       <a
         href="/newsletter"
-        className="newsletter flex flex-row justify-end gap-2 items-center"
+        className="topNavBar-newsletter flex flex-row justify-end gap-2 items-center"
       >
         <svg
           width="15"

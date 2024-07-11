@@ -5,8 +5,8 @@ import TopNavHeader, { NavOption } from "../components/TopNavBar";
 import "./Home.scss";
 import imageProducts from "src/assets/products-home.jpg";
 import CategoriesGrid from "../components/CategoriesGrid";
-import MostWantedProducts from "../components/MostWantedProducts";
-import NewArrival from "../components/NewArrival";
+import MostWantedProducts from "../components/product/MostWantedProducts";
+import NewArrivalProducts from "../components/product/NewArrivalProducts";
 import Logo from "../assets/Logo";
 import WhyChooseGreenShop from "../components/WhyChooseGreenShop";
 
@@ -116,7 +116,7 @@ const Home: React.FC = () => {
         <CategoriesGrid />
       </main>
       <MostWantedProducts />
-      <NewArrival />
+      <NewArrivalProducts />
       <section className="section-signature flex flex-col justify-between items-center gap-10">
         <h4>
           Shop guilt-free knowing that our eco-friendly e-commerce platform is

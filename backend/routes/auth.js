@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const nodemailer = require("nodemailer");
 const rateLimit = require("express-rate-limit");
 const ExpressBrute = require("express-brute");
 const usersRouter = require("./users");
@@ -36,20 +37,44 @@ const validatePassword = (password) => {
     /^(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=<>?])[A-Za-z\d!@#$%^&*()_\-+=<>?]{8,}$/;
 
   if (password.length > maxLength) {
-    return { isValid: false, error: "Password too long" };
+    return "Password too long";
   }
 
   if (!regex.test(password)) {
-    return { isValid: false, error: "Invalid password format" };
+    return "Invalid password format";
   }
 
-  return { isValid: true };
+  return null;
+};
+
+const transporter = nodemailer.createTransport({
+  service: "gmail", // ou tout autre service de votre choix
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+const sendVerificationEmail = async (email, verificationToken) => {
+  const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "Email Verification",
+    html: `<p>Click <a href="${verificationUrl}">here</a> to verify your email.</p>`,
+  };
+
+  await transporter.sendMail(mailOptions);
 };
 
 router.post("/signup", async (req, res) => {
   const { email, phoneNumber, password, role, adminSecret } = req.body;
 
+  console.log(`Received signup request for email: ${email}`);
+
   if (!["seller", "buyer", "administrator"].includes(role)) {
+    console.log(`Invalid role provided: ${role}`);
     return res.status(400).json({ error: "Invalid role" });
   }
 
@@ -57,25 +82,65 @@ router.post("/signup", async (req, res) => {
     role === "administrator" &&
     adminSecret !== process.env.ADMIN_SECRET_KEY
   ) {
+    console.log(`Invalid admin secret provided`);
     return res.status(403).json({ error: "Invalid admin secret" });
   }
 
-  const passwordValidation = validatePassword(password);
-  if (!passwordValidation.isValid) {
-    return res.status(400).json({ error: passwordValidation.error });
+  const validationError = validatePassword(password);
+  if (validationError) {
+    console.log(`Validation error: ${validationError.error}`);
+    return res.status(400).json({ error: validationError });
   }
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    req.body = {
-      email,
-      phoneNumber,
-      password: hashedPassword,
-      role,
-    };
-    await usersRouter.createUser(req, res);
+
+    const verificationToken = jwt.sign(
+      { email, phoneNumber, password: hashedPassword, role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
+
+    console.log(`Sending verification email to: ${email}`);
+    await sendVerificationEmail(email, verificationToken);
+
+    res
+      .status(201)
+      .json({ message: "Verification email sent, please check your inbox." });
   } catch (error) {
     console.error("Error signing up:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/verify-email", async (req, res) => {
+  const { token } = req.query;
+
+  console.log(`Received email verification request with token: ${token}`);
+
+  if (!token) {
+    console.log(`No token provided`);
+    return res.status(400).json({ error: "Missing token" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const { email, phoneNumber, password, role } = decoded;
+
+    console.log(`Creating new user with email: ${email}`);
+    const user = new User({
+      email,
+      phoneNumber,
+      password,
+      role,
+    });
+
+    await user.save();
+
+    res.status(200).json({ message: "Email verified successfully" });
+  } catch (error) {
+    console.error("Error verifying email:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });

@@ -53,16 +53,16 @@ const Product: React.FC<ProductProps> = ({ item }) => {
             {item.previousPrice > 0 ? (
               <>
                 <p className="product-previous-price">
-                  {convertPrice(item.previousPrice, currency)}
+                  {convertPrice(item.previousPrice, currency.code)}
                 </p>
                 <p className="product-price-discount">
-                  {convertPrice(item.price, currency)}
+                  {convertPrice(item.price, currency.code)}
                 </p>
               </>
             ) : (
               <>
                 <p className="product-price">
-                  {convertPrice(item.price, currency)}
+                  {convertPrice(item.price, currency.code)}
                 </p>
               </>
             )}

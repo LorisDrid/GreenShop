@@ -14,9 +14,32 @@ header {
     margin: 1rem 0;
   }
 
+  .header-menu-button {
+    display: none;
+  }
+
   .logo {
     font-size: 1.5rem;
     font-weight: bold;
+  }
+
+  .header-menu-button {
+    display: none;
+    width: fit-content;
+    cursor: pointer;
+
+    &:hover .meat {
+      background-color: $primary-color;
+    }
+
+    .meat {
+      display: block;
+      height: 2.4px;
+      width: 22px;
+      margin: 5px 0;
+      border-radius: 10px;
+      background-color: $grey-500;
+    }
   }
 
   .cartNumber {
@@ -60,41 +83,105 @@ header {
     justify-content: space-between;
     width: 100%;
     align-items: center;
+  }
 
-    a {
-      padding: 0.5rem 0;
-      width: 100%;
+  .nav-item {
+    padding: 0.5rem 0;
+    transition: all 0.3s;
+    color: $dark-color;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    &:hover {
+      color: $light-color !important;
+      text-decoration: none;
+      background-color: $primary-color;
+    }
+
+    &:hover svg {
+      fill: $light-color
+    }
+
+    &.nav-all {
+      font-weight: 900;
+    }
+
+    &.nav-highlighted {
+      color: $primary-color;
+    }
+
+    .nav-all-icon {
+      fill: $dark-color;
+      margin-right: 9px;
       transition: all 0.3s;
-      color: $dark-color;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+    }
+  }
 
-      &:hover {
-        color: $light-color !important;
-        text-decoration: none;
-        background-color: $primary-color;
+  @media (max-width: 1000px) {
+    .header-container {
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 0.5rem;
+
+      .language-button {
+        display: none;
       }
 
-      &:hover .nav-all-icon {
-        fill: $light-color
+      .header-menu-button {
+        display: block;
+        cursor: pointer;
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 1;
       }
 
-      &.nav-all {
-        font-weight: 900;
+      .header-logo {
+        grid-column: 2 / span 1;
+        grid-row: 1 / span 1;
       }
 
-      .nav-all-icon {
-        fill: $dark-color;
-        margin-right: 9px;
-        transition: all 0.3s;
+      .header-search-bar {
+        width: 100%;
+        grid-column: 1 / span 3;
+        grid-row: 3 / span 1;
       }
 
-      &.nav-highlighted {
-        color: $primary-color;
+      .header-button-container {
+        grid-column: 3 / span 2;
+        grid-row: 1 / span 1;
+        justify-content: end;
       }
     }
   }
+
+
+  @media (max-width: 1300px) {
+    .nav-item-1 {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 950px) {
+    .nav-item-2 {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .nav-item-3 {
+      display: none !important;
+    }
+
+    .header-nav {
+      display: none;
+    }
+
+    .header-button-container {
+      gap: 1rem;
+    }
+  }
 }
+
+

@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
     <>
       <div className="newsletter">
         <span className="logo-newsletter">
-          <Logo color="white" textOnly={false} iconOnly={false} />
+          <Logo color="white" textOnly={false} iconOnly={false} size={60} />
         </span>
         <form className="newsletter-form flex flex-col gap-4">
           <h4>Subscribe now and start making a difference !</h4>
@@ -33,8 +33,8 @@ const Footer: React.FC = () => {
       </div>
       <footer>
         <div className="flex flex-row justify-between border-b border-gray-500">
-          <div className="footer-column flex flex-col gap-6">
-            <Logo color="black" iconOnly={false} textOnly={false} />
+          <div className="footer-column flex flex-col gap-9">
+            <Logo color="black" iconOnly={false} textOnly={false} size={60} />
             <div className="flex flex-row gap-5">
               <img
                 src={require("../assets/footer/certifiedB.png")}

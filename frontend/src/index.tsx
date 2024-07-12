@@ -5,7 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
-import { CurrencyProvider } from "./contexts/LanguagesCurrencyContext";
+import {
+  CurrencyProvider,
+  LanguageProvider,
+} from "./contexts/LanguagesCurrencyContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -13,9 +16,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <CurrencyProvider>
-      <Theme appearance={"light"} accentColor={"green"}>
-        <App />
-      </Theme>
+      <LanguageProvider>
+        <Theme appearance={"light"} accentColor={"green"}>
+          <App />
+        </Theme>
+      </LanguageProvider>
     </CurrencyProvider>
   </React.StrictMode>,
 );

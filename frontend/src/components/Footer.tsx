@@ -2,8 +2,11 @@ import React from "react";
 import "./Footer.scss";
 import Logo from "../assets/Logo";
 import { TextField } from "@radix-ui/themes";
+import { useTranslation } from "react-i18next";
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="newsletter">
@@ -11,21 +14,18 @@ const Footer: React.FC = () => {
           <Logo color="white" textOnly={false} iconOnly={false} size={60} />
         </span>
         <form className="newsletter-form flex flex-col gap-4">
-          <h4>Subscribe now and start making a difference !</h4>
-          <p>
-            Be the first to know about exclusive offers, eco-tips, and new
-            arrivals!
-          </p>
+          <h4>{t("footer.newsletter")}</h4>
+          <p>{t("footer.newsletterText")}</p>
           <TextField.Root
             color="green"
             className="newsletter-input"
-            placeholder="Your email"
+            placeholder={t("footer.yourEmail")}
             size="3"
           >
             <TextField.Slot></TextField.Slot>
             <TextField.Slot>
               <button className="newsletter-submit" type="submit">
-                Subscribe
+                {t("footer.subscribe")}
               </button>
             </TextField.Slot>
           </TextField.Root>
@@ -71,83 +71,80 @@ const Footer: React.FC = () => {
             </div>
           </div>
           <div className="footer-column">
-            <h3>About Us</h3>
+            <h3>{t("footer.aboutUs")}</h3>
             <ul className="flex flex-col gap-2">
               <li>
-                <a href="#">Contacts us</a>
+                <a href="#">{t("footer.contactUs")}</a>
               </li>
               <li>
-                <a href="#">FAQs</a>
+                <a href="#">{t("footer.faqs")}</a>
               </li>
               <li>
-                <a href="#">Impact</a>
+                <a href="#">{t("footer.impact")}</a>
               </li>
               <li>
-                <a href="#">Our Story</a>
+                <a href="#">{t("footer.ourStory")}</a>
               </li>
               <li>
-                <a href="#">Blog</a>
+                <a href="#">{t("footer.blog")}</a>
               </li>
             </ul>
           </div>
           <div className="footer-column">
-            <h3>Categories</h3>
+            <h3>{t("footer.categories")}</h3>
             <ul className="flex flex-col gap-2">
               <li>
-                <a href="#">New</a>
+                <a href="#">{t("footer.new")}</a>
               </li>
               <li>
-                <a href="#">Clothing</a>
+                <a href="#">{t("footer.clothing")}</a>
               </li>
               <li>
-                <a href="#">Bath & Bedding</a>
+                <a href="#">{t("footer.bathBedding")}</a>
               </li>
               <li>
-                <a href="#">Home Goods</a>
+                <a href="#">{t("footer.homeGoods")}</a>
               </li>
               <li>
-                <a href="#">Furniture</a>
+                <a href="#">{t("footer.furniture")}</a>
               </li>
               <li>
-                <a href="#">Accessories</a>
+                <a href="#">{t("footer.accessories")}</a>
               </li>
               <li>
-                <a href="#">Gift</a>
+                <a href="#">{t("footer.gift")}</a>
               </li>
             </ul>
           </div>
           <div className="footer-column">
-            <h3>Support</h3>
+            <h3>{t("footer.support")}</h3>
             <ul className="flex flex-col gap-2">
               <li>
-                <a href="#">Shipping</a>
+                <a href="#">{t("footer.shipping")}</a>
               </li>
               <li>
-                <a href="#">Returns</a>
+                <a href="#">{t("footer.returns")}</a>
               </li>
               <li>
-                <a href="#">Privacy Policy</a>
+                <a href="#">{t("footer.privacyPolicy")}</a>
               </li>
               <li>
-                <a href="#">Terms of Use</a>
+                <a href="#">{t("footer.termsOfUse")}</a>
               </li>
               <li>
-                <a href="#">Affiliates</a>
+                <a href="#">{t("footer.affiliates")}</a>
               </li>
             </ul>
           </div>
           <div className="footer-column">
-            <h3>Newsletter</h3>
-            <p>
-              Join our GreenShop community and be the first to know about our
-              latest eco-friendly products, exclusive discounts, and tips.
-            </p>
+            <h3>{t("footer.newsletterHeader")}</h3>
+            <p>{t("footer.newsletterTextMain")}</p>
             <br />
-            <a href="#">Subscribe</a>
+            <a href="#">{t("footer.subscribeLink")}</a>
           </div>
         </div>
         <div className="footer-copyright text-center">
-          <p>© 2024 GreenShop, Inc. All Rights Reserved.</p>
+          <p>{t("footer.copyright")}</p>
         </div>
       </footer>
     </>

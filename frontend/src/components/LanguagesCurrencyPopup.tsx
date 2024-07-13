@@ -7,6 +7,7 @@ import {
   useCurrency,
   useLanguage,
 } from "../contexts/LanguagesCurrencyContext";
+import i18n from "i18next";
 
 interface LanguagesCurrencyPopupProps {
   showLanguageText?: boolean;
@@ -29,10 +30,13 @@ const LanguagesCurrencyPopup: React.FC<LanguagesCurrencyPopupProps> = ({
   const handleConfirm = () => {
     setCurrency(selectedCurrency);
     setLanguage(selectedLanguage);
+    i18n.changeLanguage(selectedLanguage.code).then(() => {
+      console.log("Language changed to", selectedLanguage.code);
+    });
   };
 
   return (
-    <div className="nav-item w-fit self-center">
+    <div className={`w-fit self-center ${showLanguageText ? "nav-item" : ""}`}>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
           <Flex

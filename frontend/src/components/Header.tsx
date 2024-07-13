@@ -5,8 +5,11 @@ import { Box, Flex, Separator, TextField } from "@radix-ui/themes";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import LanguagesCurrencyPopup from "./LanguagesCurrencyPopup";
 import NavigationExpanded from "./NavigationExpanded";
+import { useTranslation } from "react-i18next";
 
 const Header: React.FC = () => {
+  const { t } = useTranslation();
+
   function showMenu(event: React.MouseEvent<HTMLDivElement>) {
     const menuButton = event.currentTarget;
     const headerContainer = menuButton.closest(".header-container");
@@ -32,7 +35,11 @@ const Header: React.FC = () => {
           <Logo size={65} color="#29AC00" iconOnly={false} />
         </div>
         <Box maxWidth="20" className="header-search-bar">
-          <TextField.Root placeholder="Search here…" size="3" radius="full">
+          <TextField.Root
+            placeholder={t("header.searchHere")}
+            size="3"
+            radius="full"
+          >
             <TextField.Slot>
               <MagnifyingGlassIcon height="24" width="24" color="#29AC00" />
             </TextField.Slot>
@@ -125,47 +132,47 @@ const Header: React.FC = () => {
           >
             <path d="M3.7 6.9h42.6c1.8 0 3.2-1.4 3.2-3.2 0-1.8-1.4-3.2-3.2-3.2H3.7C1.9.5.5 1.9.5 3.7c0 1.8 1.4 3.2 3.2 3.2Zm0 17.3h42.6c1.8 0 3.2-1.4 3.2-3.2 0-1.8-1.4-3.2-3.2-3.2H3.7C1.9 17.8.5 19.2.5 21c0 1.8 1.4 3.2 3.2 3.2Zm42.6 17.3c1.8 0 3.2-1.4 3.2-3.2 0-1.8-1.4-3.2-3.2-3.2H3.7c-1.8 0-3.2 1.4-3.2 3.2 0 1.8 1.4 3.2 3.2 3.2h42.6Z" />
           </svg>
-          All
+          {t("header.all")}
         </a>
         <Separator orientation="vertical" />
         <a href="/" className="nav-item nav-highlighted">
-          Sales
+          {t("header.sales")}
         </a>
         <Separator orientation="vertical" />
         <a href="/" className="nav-item">
-          Students
+          {t("header.students")}
         </a>
         <Separator orientation="vertical" />
         <a href="/" className="nav-item">
-          Best Seller
+          {t("header.bestSellers")}
         </a>
         <Separator orientation="vertical" />
         <a href="/" className="nav-item">
-          Clothing
+          {t("header.clothing")}
         </a>
         <Separator orientation="vertical" />
         <a href="/" className="nav-item">
-          Bath
+          {t("header.bath")}
         </a>
         <Separator orientation="vertical" className="nav-item-5" />
         <a href="/" className="nav-item nav-item-5">
-          Bedding
+          {t("header.bedding")}
         </a>
         <Separator orientation="vertical" className="nav-item-4" />
         <a href="/" className="nav-item nav-item-4">
-          Home
+          {t("header.home")}
         </a>
         <Separator orientation="vertical" className="nav-item-3" />
         <a href="/" className="nav-item nav-item-3">
-          Books
+          {t("header.books")}
         </a>
         <Separator orientation="vertical" className="nav-item-2" />
         <a href="/" className="nav-item nav-item-2">
-          Plants
+          {t("header.plants")}
         </a>
         <Separator orientation="vertical" className="nav-item-1" />
         <a href="/" className="nav-item nav-item-1">
-          Accessories
+          {t("header.accessories")}
         </a>
       </nav>
       <NavigationExpanded />

@@ -9,14 +9,17 @@ import MostWantedProducts from "../components/product/MostWantedProducts";
 import NewArrivalProducts from "../components/product/NewArrivalProducts";
 import Logo from "../assets/Logo";
 import WhyChooseGreenShop from "../components/WhyChooseGreenShop";
+import { useTranslation } from "react-i18next";
 
 const Home: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="home-container flex flex-col">
       <TopNavHeader selected={NavOption.Shop} />
       <Header />
       <main className="flex-1">
-        <section className="home-hero-section flex justify-between items-center flex-wrap">
+        <section className="home-hero-section flex justify-between items-center flex-wrap-reverse max-xl:justify-center">
           <div className="home-hero-text flex justify-center items-center flex-col gap-6 relative">
             <h1 className="home-title">
               <svg
@@ -100,16 +103,16 @@ const Home: React.FC = () => {
                   />
                 </defs>
               </svg>
-              Good for You,
+              {t("home.goodForYou")}
               <br />
-              Better for the Earth
+              {t("home.betterForThePlanet")}
             </h1>
             <p className="home-subtitle">
-              Every purchase you make supports a greener future,
+              {t("home.everyPurchase")}
               <br />
-              enhancing your life while protecting our planet
+              {t("home.enhancing")}
             </p>
-            <button className="home-subtitle-btn">Shop Now</button>
+            <button className="home-subtitle-btn">{t("home.shopNow")}</button>
           </div>
           <img src={imageProducts} alt="Home" className="home-header-img" />
         </section>
@@ -118,11 +121,7 @@ const Home: React.FC = () => {
       <MostWantedProducts />
       <NewArrivalProducts />
       <section className="section-signature flex flex-col justify-between items-center gap-10">
-        <h4>
-          Shop guilt-free knowing that our eco-friendly e-commerce platform is
-          committed to reducing environmental impact and promoting sustainable
-          practices in every step of the shopping process
-        </h4>
+        <h4>{t("home.signature")}</h4>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="444"

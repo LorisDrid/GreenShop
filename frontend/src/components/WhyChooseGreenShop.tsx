@@ -1,38 +1,37 @@
 import React from "react";
 import "./WhyChooseGreenShop.scss";
 import Logo from "../assets/Logo";
+import { useTranslation } from "react-i18next";
 
 function WhyChooseGreenShop() {
   const greenCards = [
     {
       img: require("../assets/why-choose/recycled-items.jpg"),
-      title: "1 Million",
-      text: "Recycled Items",
-      description:
-        "GreenShop has recycled and reintroduced over one million items into the market, contributing to waste reduction and promoting the circular economy.",
+      title: "greenCards.1.title",
+      text: "greenCards.1.text",
+      description: "greenCards.1.description",
     },
     {
       img: require("../assets/why-choose/tons-plastic.jpg"),
-      title: "8 Million",
-      text: "Tons of Plastic",
-      description:
-        "Every year, over 8 million tons of plastic waste end up in our oceans, harming marine life and ecosystems.",
+      title: "greenCards.2.title",
+      text: "greenCards.2.text",
+      description: "greenCards.2.description",
     },
     {
       img: require("../assets/why-choose/trees-planted.jpg"),
-      title: "2 Million",
-      text: "Trees Planted",
-      description:
-        "With every purchase, a portion of our profits goes towards planting trees, resulting in over 2 million trees planted globally.",
+      title: "greenCards.3.title",
+      text: "greenCards.3.text",
+      description: "greenCards.3.description",
     },
     {
       img: require("../assets/why-choose/co2-saved.jpg"),
-      title: "200 Tons",
-      text: "Of CO2 Saved",
-      description:
-        "Thanks to our eco-friendly products, we have helped our customers save more than 200 tons of CO2 by reducing the carbon footprint of their purchases.",
+      title: "greenCards.4.title",
+      text: "greenCards.4.text",
+      description: "greenCards.4.description",
     },
   ];
+
+  const { t } = useTranslation();
 
   return (
     <section className="why-choose-section flex flex-col items-center justify-center">
@@ -52,7 +51,7 @@ function WhyChooseGreenShop() {
             transform="rotate(-15 -5.75 36.17)"
           />
         </svg>
-        <h1>Why Choose</h1>
+        <h1>{t("home.whyChoose")}</h1>
         <Logo color="white" textOnly={true} size={75} />
         <h1>?</h1>
       </span>
@@ -63,15 +62,15 @@ function WhyChooseGreenShop() {
               <img
                 className="green-card-image"
                 src={card.img}
-                alt={card.text}
+                alt={t(card.text)}
               />
-              <h3 className="green-card-title">{card.title}</h3>
+              <h3 className="green-card-title">{t(card.title)}</h3>
               <span className="green-card-logo">
                 <Logo color="white" size={35} iconOnly={true} />
               </span>
             </span>
-            <p className="green-card-text">{card.text}</p>
-            <p className="text-center">{card.description}</p>
+            <p className="green-card-text">{t(card.text)}</p>
+            <p className="text-center">{t(card.description)}</p>
           </div>
         ))}
       </div>

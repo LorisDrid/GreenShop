@@ -9,6 +9,7 @@ import {
   CurrencyProvider,
   LanguageProvider,
 } from "./contexts/LanguagesCurrencyContext";
+import "./i18n";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,

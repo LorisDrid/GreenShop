@@ -3,7 +3,7 @@ import "./Header.scss";
 import Logo from "../assets/Logo";
 import { Box, Flex, Separator, TextField } from "@radix-ui/themes";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import LanguagesCurrencyPopup from "./LanguagesCurrencyPopup";
+import LanguagesCurrencyDialog from "./LanguagesCurrencyDialog";
 import NavigationExpanded from "./NavigationExpanded";
 import { useTranslation } from "react-i18next";
 
@@ -117,7 +117,7 @@ const Header: React.FC = () => {
               </defs>
             </svg>
           </a>
-          <LanguagesCurrencyPopup />
+          <LanguagesCurrencyDialog />
         </Flex>
       </div>
       <nav className="header-nav">

@@ -1,0 +1,62 @@
+@import '../variables';
+
+.dialog-content-container {
+  background-image: url("../assets/languages/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 3rem 3rem 0 3rem !important;
+  width: fit-content !important;
+
+  button {
+    cursor: pointer;
+    width: 100%;
+
+    &:hover {
+      scale: initial;
+    }
+  }
+
+  .dialog-content {
+    background-color: $light-color;
+    border-radius: var(--radius-5);
+    width: fit-content;
+    padding: 2rem;
+  }
+
+  .dialog-logo {
+    margin: 0.5rem 0 0.5rem 0;
+  }
+
+  .close-menu-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+
+    .meat {
+      display: block;
+      height: 2.4px;
+      width: 22px;
+      margin: 5px 0;
+      border-radius: 10px;
+      background-color: $grey-600;
+
+      &:nth-child(1) {
+        transform: rotate(45deg) translateY(5.5px);
+      }
+
+      &:nth-child(2) {
+        transform: rotate(-45deg) translateY(-5.5px);
+      }
+    }
+  }
+
+  .currency-text {
+    color: $third-color;
+  }
+
+  .language-text {
+    color: $primary-color;
+  }
+}

@@ -13,9 +13,10 @@ export const languages: LabelCode[] = [
 ];
 
 export const currencies: LabelCode[] = [
-  { code: "USD", label: "USD" },
-  { code: "EUR", label: "EUR" },
-  { code: "GBP", label: "GBP" },
+  { code: "usd", label: "USD" },
+  { code: "eur", label: "EUR" },
+  { code: "won", label: "WON" },
+  { code: "dng", label: "DNG" },
 ];
 
 interface CurrencyContextProps {

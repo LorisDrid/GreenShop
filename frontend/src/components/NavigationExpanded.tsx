@@ -1,9 +1,9 @@
 import React from "react";
 import "./NavigationExpanded.scss";
-import LanguagesCurrencyPopup from "./LanguagesCurrencyPopup";
+import LanguagesCurrencyDialog from "./LanguagesCurrencyDialog";
 
 const NavigationExpanded: React.FC = () => {
-  function close() {
+  function toggleNavigationExpanded() {
     const topNavBar = document.querySelector(".topNavBar");
     topNavBar?.classList.toggle("isHidden");
 
@@ -58,8 +58,10 @@ const NavigationExpanded: React.FC = () => {
           Accessories
         </a>
       </nav>
-      <LanguagesCurrencyPopup showLanguageText={true} />
-      <div className="close-menu-button" onClick={close}>
+      <span className="w-fit self-center">
+        <LanguagesCurrencyDialog showLanguageText={true} />
+      </span>
+      <div className="close-menu-button" onClick={toggleNavigationExpanded}>
         <span className="meat"></span>
         <span className="meat"></span>
       </div>
@@ -68,3 +70,11 @@ const NavigationExpanded: React.FC = () => {
 };
 
 export default NavigationExpanded;
+
+export function closeNavigationExpanded() {
+  const topNavBar = document.querySelector(".topNavBar");
+  topNavBar?.classList.remove("isHidden");
+
+  const navigationExpanded = document.querySelector(".navigation-expanded");
+  navigationExpanded?.classList.remove("show");
+}

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Footer.scss";
-import { AlertDialog, Flex, Select } from "@radix-ui/themes";
+import { AlertDialog, Flex } from "@radix-ui/themes";
 import {
   currencies,
   LabelCode,
@@ -22,6 +22,8 @@ const LanguagesCurrencyDialog: React.FC<LanguagesCurrencyDialogProps> = ({
 }) => {
   const { currency, setCurrency } = useCurrency();
   const { language, setLanguage } = useLanguage();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const changeLanguage = (language: LabelCode) => {
     setLanguage(language);
@@ -34,9 +36,27 @@ const LanguagesCurrencyDialog: React.FC<LanguagesCurrencyDialogProps> = ({
     setCurrency(currency);
   };
 
+  useEffect(() => {
+    if (isOpen) {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (
+          dialogRef.current &&
+          !dialogRef.current.contains(event.target as Node)
+        ) {
+          setIsOpen(false);
+        }
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [isOpen]);
+
   return (
     <div className={`${showLanguageText ? "nav-item" : ""}`}>
-      <AlertDialog.Root>
+      <AlertDialog.Root open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialog.Trigger>
           <Flex
             align="center"
@@ -59,76 +79,60 @@ const LanguagesCurrencyDialog: React.FC<LanguagesCurrencyDialogProps> = ({
             </svg>
           </Flex>
         </AlertDialog.Trigger>
-        <AlertDialog.Content className="dialog-content-container flex justify-center items-center flex-col">
+        <AlertDialog.Content
+          ref={dialogRef}
+          className="dialog-content-container flex justify-center items-center flex-col"
+        >
           <div className="dialog-content">
-            <div className="flex flex-col justify-between gap-4">
-              <span className="text-center">
-                <p className="font-bold flex gap-1">
+            <div className="flex">
+              <span className="text-center border-r border-gray-200">
+                <p className="font-bold  my-5 mx-8">
                   Please choose your<p className="language-text">Language</p>
                 </p>
-                <Select.Root
-                  size="3"
-                  value={language.code}
-                  onValueChange={(e) =>
-                    changeLanguage(
-                      languages.find((language) => language.code === e) ||
-                        languages[0],
-                    )
-                  }
-                >
-                  <Select.Trigger />
-                  <Select.Content>
-                    {languages.map((language) => (
-                      <Select.Item key={language.code} value={language.code}>
-                        <span className="flex gap-4 flex-row">
-                          <img
-                            src={require(
-                              "../assets/languages/" + language.code + ".svg",
-                            )}
-                            alt="Languages selection button"
-                            width="20"
-                            height="20"
-                          />
-                          {language.label}
-                        </span>
-                      </Select.Item>
-                    ))}
-                  </Select.Content>
-                </Select.Root>
+                {languages.map((lang) => (
+                  <span
+                    className={
+                      "option flex gap-4 flex-row " +
+                      (lang == language && "language-selected")
+                    }
+                    key={lang.code}
+                    onClick={() => changeLanguage(lang)}
+                  >
+                    <img
+                      src={require("../assets/languages/" + lang.code + ".svg")}
+                      alt="Languages selection button"
+                      width="30"
+                      height="30"
+                    />
+                    {lang.label}
+                  </span>
+                ))}
               </span>
               <span className="text-center">
-                <p className="font-bold flex gap-1">
+                <p className="font-bold my-5 mx-8">
                   Please choose your<p className="currency-text">Currency</p>
                 </p>
-                <Select.Root
-                  size="3"
-                  value={currency.code}
-                  onValueChange={(e) =>
-                    changeCurrency(
-                      currencies.find((currency) => currency.code === e) ||
-                        currencies[0],
-                    )
-                  }
-                >
-                  <Select.Trigger />
-                  <Select.Content>
-                    {currencies.map((currency) => (
-                      <Select.Item key={currency.code} value={currency.code}>
-                        <span className="flex gap-4 flex-row">
-                          <img
-                            src={require(
-                              "../assets/currencies/" + currency.code + ".svg",
-                            )}
-                            alt="Currencies selection button"
-                            height="20"
-                            width="10"
-                          />
-                          {currency.label}
-                        </span>
-                      </Select.Item>
-                    ))}
-                  </Select.Content>
-                </Select.Root>
+                {currencies.map((curr) => (
+                  <span
+                    className={
+                      "option flex gap-4 flex-row " +
+                      (curr == currency && "currency-selected")
+                    }
+                    key={curr.code}
+                    onClick={() => changeCurrency(curr)}
+                  >
+                    <img
+                      src={require(
+                        "../assets/currencies/" + curr.code + ".svg",
+                      )}
+                      alt="Currencies selection button"
+                      height="20"
+                      width="auto"
+                      className="currency-icon"
+                    />
+                    {curr.label}
+                  </span>
+                ))}
               </span>
             </div>
             <div className="flex justify-end gap-2">

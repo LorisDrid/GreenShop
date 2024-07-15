@@ -1,0 +1,14 @@
+@import '../../variables';
+
+.section-container {
+  padding: $body-margin-border;
+  background-color: $third-color;
+
+  .section-title {
+    color: $light-color;
+  }
+
+  .section-subtitle {
+    color: $grey-500;
+  }
+}

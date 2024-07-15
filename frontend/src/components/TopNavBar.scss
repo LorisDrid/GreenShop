@@ -1,0 +1,81 @@
+@import '../variables';
+
+
+.topNavBar {
+  background-color: $secondary-color;
+  color: $light-color;
+  padding: 0.6rem $body-margin-border;
+  font-size: 0.9em;
+  transition: transform .3s cubic-bezier(.38,.41,.27,1);
+  transform: none;
+
+  &.isHidden {
+    transform: translateY(-100%);
+  }
+
+  a {
+    text-align: center;
+    color: $light-color;
+    text-decoration: none;
+
+    &:visited {
+      color: $light-color;
+    }
+  }
+
+  .tabs-container {
+    display: flex;
+    position: relative;
+  }
+
+  .tab {
+    margin: 0 0.5rem 0 0;
+    transition: color 0.3s ease;
+
+    &.selected {
+      font-weight: bold;
+    }
+
+    &.selected {
+      font-weight: bold;
+      padding-bottom: 3px;
+
+      &:hover {
+        color: $light-color;
+      }
+    }
+
+    &:hover {
+      color: $grey-100;
+    }
+  }
+
+  .underline {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: $light-color;
+    transition: left 0.3s ease, width 0.3s ease;
+  }
+
+  .topNavBar-newsletter svg {
+    fill: $light-color;
+  }
+}
+
+
+@media (max-width: 950px) {
+  .topNavBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .tabs-container {
+      display: none;
+    }
+
+    .topNavBar-newsletter {
+      display: none;
+    }
+  }
+}

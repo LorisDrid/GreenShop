@@ -1,0 +1,22 @@
+@import '../../variables';
+
+.new-section-container {
+  padding: $body-margin-border;
+  background-color: $light-color;
+
+  .section-title {
+    color: $third-color;
+  }
+
+  .section-subtitle {
+    color: $grey-500;
+  }
+}
+
+.btn-see-more {
+  background-color: $third-color;
+  color: $light-color;
+  width: fit-content;
+  align-self: center;
+  margin: 2rem 0;
+}

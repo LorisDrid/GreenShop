@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
 // Récupérer tous les items
 router.get("/", async (req, res) => {
   try {
-    const items = await Item.find();
+    const items = await Item.find().populate("labels");
     res.json(items);
   } catch (error) {
     console.error("Error fetching items:", error);
@@ -42,7 +42,7 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const item = await Item.findById(id);
+    const item = await Item.findById(id).populate("labels");
 
     if (!item) {
       return res.status(404).json({ error: "Item not found" });

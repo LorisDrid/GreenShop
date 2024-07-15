@@ -33,6 +33,9 @@ mongoose
     const authRouter = require("./routes/auth");
     app.use("/auth", authRouter);
 
+    const labelsRouter = require("./routes/labels");
+    app.use("/labels", labelsRouter);
+
     app.listen(port, () => {
       console.log(`✅ Server is running on port ${port}`);
     });

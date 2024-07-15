@@ -1,0 +1,65 @@
+@import '../variables';
+
+.newsletter {
+  padding: $body-margin-border;
+  background-image: url('../assets/footer/newsletter-background.jpg');
+
+  .newsletter-form {
+    background-color: $light-color;
+    border-radius: $border-radius-high;
+    padding: $body-margin-border;
+    width: fit-content;
+    margin: 10rem 0;
+    max-width: 550px;
+  }
+
+  .newsletter-input {
+    background-color: $light-color;
+    border-radius: $border-radius-high;
+    height: fit-content;
+
+    .rt-TextFieldSlot {
+      padding-right: 0;
+    }
+  }
+
+  .newsletter-submit {
+    background-color: $secondary-color;
+    color: $light-color;
+    font-weight: bold;
+    margin: 0.2rem 0.3rem;
+  }
+}
+
+footer {
+  padding: 7rem $body-margin-border 1rem $body-margin-border;
+  background-image: url('../assets/footer/footer-background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: -60px;
+  filter: drop-shadow(0 0 50px rgba(0, 0, 0, 0.3));
+  -webkit-filter: drop-shadow(0 0 50px rgba(0, 0, 0, 0.3));
+
+  h3 {
+    margin-bottom: $body-margin-border;
+  }
+
+  .footer-column {
+    min-width: 10%;
+    max-width: 25%;
+    margin-bottom: 2rem;
+  }
+
+  a {
+    text-decoration: underline;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  .footer-copyright {
+    padding-top: 1rem;
+  }
+}

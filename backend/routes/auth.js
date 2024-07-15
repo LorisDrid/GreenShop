@@ -1,37 +1,80 @@
-// routes/auth.js
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const nodemailer = require("nodemailer");
+const rateLimit = require("express-rate-limit");
+const ExpressBrute = require("express-brute");
 const usersRouter = require("./users");
 const User = require("../models/user");
 
 router.use(cookieParser());
 
-// Méthode de validation du token
-router.post("/validate-token", (req, res) => {
-  const token = req.headers.authorization;
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 50,
+  message: "Too many requests, please try again later",
+});
 
-  if (!token) {
-    return res.status(401).json({ error: "Missing token" });
+router.use(globalLimiter);
+
+const store = new ExpressBrute.MemoryStore();
+const bruteforce = new ExpressBrute(store, {
+  freeRetries: 5,
+  minWait: 5 * 60 * 1000,
+  maxWait: 15 * 60 * 1000,
+  failCallback: (req, res, next, nextValidRequestDate) => {
+    res.status(429).json({
+      error: "Too many failed login attempts, please try again later",
+    });
+  },
+});
+
+const validatePassword = (password) => {
+  const maxLength = 20;
+  const regex =
+    /^(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=<>?])[A-Za-z\d!@#$%^&*()_\-+=<>?]{8,}$/;
+
+  if (password.length > maxLength) {
+    return "Password too long";
   }
 
-  jwt.verify(token.split(" ")[1], process.env.JWT_SECRET, (err) => {
-    if (err) {
-      // Si le token est invalide, essayer de rafraîchir le token
-      refreshToken(req, res);
-    } else {
-      // Si le token est valide, renvoyer un succès avec un message
-      res.status(200).json({ message: "Token is valid" });
-    }
-  });
-});
-// Route d'inscription (sign up)
+  if (!regex.test(password)) {
+    return "Invalid password format";
+  }
+
+  return null;
+};
+
+// const transporter = nodemailer.createTransport({
+//   service: "gmail", // ou tout autre service de votre choix
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
+
+// const sendVerificationEmail = async (email, verificationToken) => {
+//   const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+
+//   const mailOptions = {
+//     from: process.env.EMAIL_USER,
+//     to: email,
+//     subject: "Email Verification",
+//     html: `<p>Click <a href="${verificationUrl}">here</a> to verify your email.</p>`,
+//   };
+
+//   await transporter.sendMail(mailOptions);
+// };
+
 router.post("/signup", async (req, res) => {
   const { email, phoneNumber, password, role, adminSecret } = req.body;
 
+  // console.log(`Received signup request for email: ${email}`);
+
   if (!["seller", "buyer", "administrator"].includes(role)) {
+    console.log(`Invalid role provided: ${role}`);
     return res.status(400).json({ error: "Invalid role" });
   }
 
@@ -39,25 +82,70 @@ router.post("/signup", async (req, res) => {
     role === "administrator" &&
     adminSecret !== process.env.ADMIN_SECRET_KEY
   ) {
+    console.log(`Invalid admin secret provided`);
     return res.status(403).json({ error: "Invalid admin secret" });
+  }
+
+  const validationError = validatePassword(password);
+  if (validationError) {
+    console.log(`Validation error: ${validationError.error}`);
+    return res.status(400).json({ error: validationError });
   }
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    req.body = {
-      email,
-      phoneNumber,
-      password: hashedPassword,
-      role,
-    };
-    await usersRouter.createUser(req, res);
+
+    const verificationToken = jwt.sign(
+      { email, phoneNumber, password: hashedPassword, role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
+
+    // console.log(`Sending verification email to: ${email}`);
+    // await sendVerificationEmail(email, verificationToken);
+
+    res
+      .status(201)
+      .json({ message: "Verification email sent, please check your inbox." });
   } catch (error) {
     console.error("Error signing up:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.post("/login", async (req, res) => {
+// router.get("/verify-email", async (req, res) => {
+//   const { token } = req.query;
+
+//   console.log(`Received email verification request with token: ${token}`);
+
+//   if (!token) {
+//     console.log(`No token provided`);
+//     return res.status(400).json({ error: "Missing token" });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+//     const { email, phoneNumber, password, role } = decoded;
+
+//     console.log(`Creating new user with email: ${email}`);
+//     const user = new User({
+//       email,
+//       phoneNumber,
+//       password,
+//       role,
+//     });
+
+//     await user.save();
+
+//     res.status(200).json({ message: "Email verified successfully" });
+//   } catch (error) {
+//     console.error("Error verifying email:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
+router.post("/login", bruteforce.prevent, async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -72,7 +160,9 @@ router.post("/login", async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
-    // Création du token d'accès
+
+    bruteforce.reset(req.ip);
+
     const accessToken = jwt.sign(
       {
         userId: user._id,
@@ -80,25 +170,22 @@ router.post("/login", async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "3m", // Durée de validité du token d'accès
+        expiresIn: "3m",
       },
     );
 
-    // Création du token de rafraîchissement
     const refreshToken = jwt.sign(
       {
         userId: user._id,
       },
       process.env.REFRESH_TOKEN_SECRET,
       {
-        expiresIn: "1d", // Durée de validité du token de rafraîchissement
+        expiresIn: "1d",
       },
     );
 
-    // Assigner le token de rafraîchissement dans un cookie
     res.cookie("refreshToken", refreshToken, { httpOnly: true });
 
-    // Envoi du token d'accès dans la réponse
     res.json({ accessToken });
   } catch (error) {
     console.error("Error logging in:", error);
@@ -106,7 +193,22 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Fonction pour rafraîchir le token
+router.post("/validate-token", (req, res) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ error: "Missing token" });
+  }
+
+  jwt.verify(token.split(" ")[1], process.env.JWT_SECRET, (err) => {
+    if (err) {
+      refreshToken(req, res);
+    } else {
+      res.status(200).json({ message: "Token is valid" });
+    }
+  });
+});
+
 function refreshToken(req, res) {
   const refreshToken = req.cookies.refreshToken;
 
@@ -118,10 +220,9 @@ function refreshToken(req, res) {
     if (err) {
       return res.status(403).json({ error: "Invalid refresh token" });
     } else {
-      // Si le token de rafraîchissement est valide, générer un nouveau token d'accès
       const accessToken = jwt.sign(
         {
-          username: decoded.username, // Utilisez les informations du token de rafraîchissement
+          username: decoded.username,
           email: decoded.email,
         },
         process.env.JWT_SECRET,

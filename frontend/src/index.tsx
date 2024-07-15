@@ -1,15 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
+import {
+  CurrencyProvider,
+  LanguageProvider,
+} from "./contexts/LanguagesCurrencyContext";
+import "./i18n";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <CurrencyProvider>
+      <LanguageProvider>
+        <Theme appearance={"light"} accentColor={"green"}>
+          <App />
+        </Theme>
+      </LanguageProvider>
+    </CurrencyProvider>
   </React.StrictMode>,
 );
 

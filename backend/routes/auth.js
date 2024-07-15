@@ -47,31 +47,31 @@ const validatePassword = (password) => {
   return null;
 };
 
-const transporter = nodemailer.createTransport({
-  service: "gmail", // ou tout autre service de votre choix
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+// const transporter = nodemailer.createTransport({
+//   service: "gmail", // ou tout autre service de votre choix
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
 
-const sendVerificationEmail = async (email, verificationToken) => {
-  const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+// const sendVerificationEmail = async (email, verificationToken) => {
+//   const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
 
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: "Email Verification",
-    html: `<p>Click <a href="${verificationUrl}">here</a> to verify your email.</p>`,
-  };
+//   const mailOptions = {
+//     from: process.env.EMAIL_USER,
+//     to: email,
+//     subject: "Email Verification",
+//     html: `<p>Click <a href="${verificationUrl}">here</a> to verify your email.</p>`,
+//   };
 
-  await transporter.sendMail(mailOptions);
-};
+//   await transporter.sendMail(mailOptions);
+// };
 
 router.post("/signup", async (req, res) => {
   const { email, phoneNumber, password, role, adminSecret } = req.body;
 
-  console.log(`Received signup request for email: ${email}`);
+  // console.log(`Received signup request for email: ${email}`);
 
   if (!["seller", "buyer", "administrator"].includes(role)) {
     console.log(`Invalid role provided: ${role}`);
@@ -101,8 +101,8 @@ router.post("/signup", async (req, res) => {
       { expiresIn: "1h" },
     );
 
-    console.log(`Sending verification email to: ${email}`);
-    await sendVerificationEmail(email, verificationToken);
+    // console.log(`Sending verification email to: ${email}`);
+    // await sendVerificationEmail(email, verificationToken);
 
     res
       .status(201)
@@ -113,37 +113,37 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.get("/verify-email", async (req, res) => {
-  const { token } = req.query;
+// router.get("/verify-email", async (req, res) => {
+//   const { token } = req.query;
 
-  console.log(`Received email verification request with token: ${token}`);
+//   console.log(`Received email verification request with token: ${token}`);
 
-  if (!token) {
-    console.log(`No token provided`);
-    return res.status(400).json({ error: "Missing token" });
-  }
+//   if (!token) {
+//     console.log(`No token provided`);
+//     return res.status(400).json({ error: "Missing token" });
+//   }
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const { email, phoneNumber, password, role } = decoded;
+//     const { email, phoneNumber, password, role } = decoded;
 
-    console.log(`Creating new user with email: ${email}`);
-    const user = new User({
-      email,
-      phoneNumber,
-      password,
-      role,
-    });
+//     console.log(`Creating new user with email: ${email}`);
+//     const user = new User({
+//       email,
+//       phoneNumber,
+//       password,
+//       role,
+//     });
 
-    await user.save();
+//     await user.save();
 
-    res.status(200).json({ message: "Email verified successfully" });
-  } catch (error) {
-    console.error("Error verifying email:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+//     res.status(200).json({ message: "Email verified successfully" });
+//   } catch (error) {
+//     console.error("Error verifying email:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
 
 router.post("/login", bruteforce.prevent, async (req, res) => {
   const { email, password } = req.body;

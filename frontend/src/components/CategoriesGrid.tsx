@@ -24,7 +24,7 @@ function CategoriesGrid() {
   ];
 
   return (
-    <div className="grid grid-cols-5 grid-rows-2 gap-7">
+    <div className="category-grid grid grid-cols-5 grid-rows-2 gap-7">
       {categories.map((category, index) => (
         <CategoryCard key={index} category={category} index={index} />
       ))}

@@ -1,8 +1,11 @@
 import React from "react";
 import "./NavigationExpanded.scss";
 import LanguagesCurrencyDialog from "./LanguagesCurrencyDialog";
+import {useTranslation} from "react-i18next";
 
 const NavigationExpanded: React.FC = () => {
+    const {t} = useTranslation();
+
   function toggleNavigationExpanded() {
     const topNavBar = document.querySelector(".topNavBar");
     topNavBar?.classList.toggle("isHidden");
@@ -14,7 +17,7 @@ const NavigationExpanded: React.FC = () => {
   return (
     <div className="navigation-expanded">
       <nav className="navigation-expanded-nav">
-        <a href="/" className="nav-item">
+          <a href="/frontend/public" className="nav-item">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="nav-all-icon"
@@ -25,37 +28,37 @@ const NavigationExpanded: React.FC = () => {
           >
             <path d="M3.7 6.9h42.6c1.8 0 3.2-1.4 3.2-3.2 0-1.8-1.4-3.2-3.2-3.2H3.7C1.9.5.5 1.9.5 3.7c0 1.8 1.4 3.2 3.2 3.2Zm0 17.3h42.6c1.8 0 3.2-1.4 3.2-3.2 0-1.8-1.4-3.2-3.2-3.2H3.7C1.9 17.8.5 19.2.5 21c0 1.8 1.4 3.2 3.2 3.2Zm42.6 17.3c1.8 0 3.2-1.4 3.2-3.2 0-1.8-1.4-3.2-3.2-3.2H3.7c-1.8 0-3.2 1.4-3.2 3.2 0 1.8 1.4 3.2 3.2 3.2h42.6Z" />
           </svg>
-          All
+              {t("header.all")}
         </a>
-        <a href="/" className="nav-item nav-highlighted">
-          Sales
+          <a href="/frontend/public" className="nav-item nav-highlighted">
+              {t("header.sales")}
         </a>
-        <a href="/" className="nav-item">
-          Students
+          <a href="/frontend/public" className="nav-item">
+              {t("header.students")}
         </a>
-        <a href="/" className="nav-item">
-          Best Seller
+          <a href="/frontend/public" className="nav-item">
+              {t("header.bestSellers")}
         </a>
-        <a href="/" className="nav-item">
-          Clothing
+          <a href="/frontend/public" className="nav-item">
+              {t("header.clothing")}
         </a>
-        <a href="/" className="nav-item">
-          Bath
+          <a href="/frontend/public" className="nav-item">
+              {t("header.bath")}
         </a>
-        <a href="/" className="nav-item">
-          Bedding
+          <a href="/frontend/public" className="nav-item">
+              {t("header.bedding")}
         </a>
-        <a href="/" className="nav-item">
-          Home Goods
+          <a href="/frontend/public" className="nav-item">
+              {t("header.home")}
         </a>
-        <a href="/" className="nav-item">
-          Books
+          <a href="/frontend/public" className="nav-item">
+              {t("header.books")}
         </a>
-        <a href="/" className="nav-item">
-          Plants
+          <a href="/frontend/public" className="nav-item">
+              {t("header.plants")}
         </a>
-        <a href="/" className="nav-item">
-          Accessories
+          <a href="/frontend/public" className="nav-item">
+              {t("header.accessories")}
         </a>
       </nav>
       <span className="w-fit self-center">

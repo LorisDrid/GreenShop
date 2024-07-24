@@ -49,7 +49,7 @@
 
     .home-svg-circle {
       top: 53px;
-      right: 305px;
+      right: 371px;
       scale: 1.2;
     }
   }
@@ -59,7 +59,7 @@
     .home-hero-section {
       text-align: center;
       position: relative;
-      padding: calc($body-margin-border * 2) $body-margin-border;
+      padding: calc(var(--margin-body) * 2) var(--margin-body);
 
       .home-video-container {
         position: absolute;
@@ -81,12 +81,13 @@
       }
 
       .home-hero-text {
-        width: 55%;
-        min-width: 590px;
         z-index: 1;
         filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));
         -webkit-filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));
 
+        h1 {
+          text-wrap: nowrap;
+        }
       }
 
       .home-header-img {
@@ -99,6 +100,7 @@
         color: $light-color;
         margin-bottom: 0;
         position: relative;
+        transition: transform 0.5s ease;
 
         svg {
           position: absolute;
@@ -108,32 +110,26 @@
       .home-subtitle {
         color: $light-color;
         font-size: $font-size-large;
+        max-width: 500px;
       }
 
       .home-subtitle-btn {
         background-color: $third-color;
         color: $light-color;
+        padding: 0.7rem 1.7rem;
       }
     }
   }
 
   .section-signature {
-    padding: $body-margin-border;
+    padding: var(--margin-body);
     background-image: url('../assets/background-signature.jpg');
 
     h4 {
       color: $light-color;
       text-align: center;
       width: 80%;
-      margin: $body-margin-border 0;
-    }
-  }
-
-  @media (max-width: 1239px) {
-    &.fr {
-      .home-svg-circle {
-        right: 297px;
-      }
+      margin: var(--margin-body) 0;
     }
   }
 
@@ -144,7 +140,12 @@
       }
 
       .home-title {
-        scale: 0.8;
+        transform: scale(0.8);
+      }
+
+      .home-subtitle-btn {
+        padding: 1rem 2rem;
+        width: 100%;
       }
     }
   }
@@ -152,8 +153,48 @@
   @media (max-width: 550px) {
     main {
       .home-title {
-        scale: 0.7;
+        transform: scale(0.6);
       }
+    }
+
+    .home-signature {
+      transform: scale(0.7);
+    }
+  }
+
+  @media (max-width: 450px) {
+    main {
+      .home-title {
+        transform: scale(0.5);
+      }
+    }
+
+    .home-signature {
+      transform: scale(0.6);
+    }
+  }
+
+  @media (max-width: 350px) {
+    main {
+      .home-title {
+        transform: scale(0.4);
+      }
+    }
+
+    .home-signature {
+      transform: scale(0.5);
+    }
+  }
+
+  @media (max-width: 250px) {
+    main {
+      .home-title {
+        transform: scale(0.3);
+      }
+    }
+
+    .home-signature {
+      transform: scale(0.4);
     }
   }
 }

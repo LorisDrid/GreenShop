@@ -1,10 +1,10 @@
-@import '../variables';
+@import '../../variables';
 
 
 .topNavBar {
   background-color: $secondary-color;
   color: $light-color;
-  padding: 0.6rem $body-margin-border;
+  padding: 0.6rem var(--margin-body);
   font-size: 0.9em;
   transition: transform .3s cubic-bezier(.38,.41,.27,1);
   transform: none;

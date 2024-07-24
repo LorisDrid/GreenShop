@@ -1,13 +1,20 @@
 @import '../variables';
 
 .newsletter {
-  padding: $body-margin-border;
+  padding: var(--margin-body);
   background-image: url('../assets/footer/newsletter-background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+
+  .logo-newsletter {
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
+  }
 
   .newsletter-form {
     background-color: $light-color;
     border-radius: $border-radius-high;
-    padding: $body-margin-border;
+    padding: var(--margin-body);
     width: fit-content;
     margin: 10rem 0;
     max-width: 550px;
@@ -32,7 +39,7 @@
 }
 
 footer {
-  padding: 7rem $body-margin-border 1rem $body-margin-border;
+  padding: 7rem var(--margin-body) 1rem var(--margin-body);
   background-image: url('../assets/footer/footer-background.png');
   background-size: cover;
   background-repeat: no-repeat;
@@ -41,13 +48,18 @@ footer {
   -webkit-filter: drop-shadow(0 0 50px rgba(0, 0, 0, 0.3));
 
   h3 {
-    margin-bottom: $body-margin-border;
+    margin-bottom: var(--margin-body);
+    text-wrap: nowrap;
+    width: fit-content;
   }
 
   .footer-column {
-    min-width: 10%;
-    max-width: 25%;
+    width: fit-content;
     margin-bottom: 2rem;
+
+    &:last-child {
+      max-width: 200px;
+    }
   }
 
   a {

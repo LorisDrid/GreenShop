@@ -1,11 +1,11 @@
 import React from "react";
 import "./Header.scss";
-import Logo from "../assets/Logo";
-import { Box, Flex, Separator, TextField } from "@radix-ui/themes";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import Logo from "../../assets/Logo";
+import {Box, Flex, Separator, TextField} from "@radix-ui/themes";
+import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import LanguagesCurrencyDialog from "./LanguagesCurrencyDialog";
 import NavigationExpanded from "./NavigationExpanded";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 
 const Header: React.FC = () => {
   const { t } = useTranslation();
@@ -121,7 +121,7 @@ const Header: React.FC = () => {
         </Flex>
       </div>
       <nav className="header-nav">
-        <a href="/" className="nav-item nav-all">
+        <a href="/frontend/public" className="nav-item nav-all">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="nav-all-icon"
@@ -135,43 +135,43 @@ const Header: React.FC = () => {
           {t("header.all")}
         </a>
         <Separator orientation="vertical" />
-        <a href="/" className="nav-item nav-highlighted">
+        <a href="/frontend/public" className="nav-item nav-highlighted">
           {t("header.sales")}
         </a>
         <Separator orientation="vertical" />
-        <a href="/" className="nav-item">
+        <a href="/frontend/public" className="nav-item">
           {t("header.students")}
         </a>
         <Separator orientation="vertical" />
-        <a href="/" className="nav-item">
+        <a href="/frontend/public" className="nav-item">
           {t("header.bestSellers")}
         </a>
         <Separator orientation="vertical" />
-        <a href="/" className="nav-item">
+        <a href="/frontend/public" className="nav-item">
           {t("header.clothing")}
         </a>
         <Separator orientation="vertical" />
-        <a href="/" className="nav-item">
+        <a href="/frontend/public" className="nav-item">
           {t("header.bath")}
         </a>
         <Separator orientation="vertical" className="nav-item-5" />
-        <a href="/" className="nav-item nav-item-5">
+        <a href="/frontend/public" className="nav-item nav-item-5">
           {t("header.bedding")}
         </a>
         <Separator orientation="vertical" className="nav-item-4" />
-        <a href="/" className="nav-item nav-item-4">
+        <a href="/frontend/public" className="nav-item nav-item-4">
           {t("header.home")}
         </a>
         <Separator orientation="vertical" className="nav-item-3" />
-        <a href="/" className="nav-item nav-item-3">
+        <a href="/frontend/public" className="nav-item nav-item-3">
           {t("header.books")}
         </a>
         <Separator orientation="vertical" className="nav-item-2" />
-        <a href="/" className="nav-item nav-item-2">
+        <a href="/frontend/public" className="nav-item nav-item-2">
           {t("header.plants")}
         </a>
         <Separator orientation="vertical" className="nav-item-1" />
-        <a href="/" className="nav-item nav-item-1">
+        <a href="/frontend/public" className="nav-item nav-item-1">
           {t("header.accessories")}
         </a>
       </nav>

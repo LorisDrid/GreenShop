@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./TopNavBar.scss";
-import Logo from "../assets/Logo";
-import { convertPrice } from "../utils/CurrencyUtils";
-import { useCurrency } from "../contexts/LanguagesCurrencyContext";
-import { useTranslation } from "react-i18next";
+import Logo from "../../assets/Logo";
+import {ConvertPrice} from "../../utils/CurrencyUtils";
+import {useTranslation} from "react-i18next";
 
 export enum NavOption {
   Shop = "topNav.shop",
@@ -20,7 +19,6 @@ const TopNavHeader: React.FC<SelectedProps> = ({ selected }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [hoveredTab, setHoveredTab] = useState(-1);
   const underlineRef = useRef<HTMLDivElement>(null);
-  const { currency } = useCurrency();
   const tabs = Object.values(NavOption);
   const tabRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const { t } = useTranslation();
@@ -66,7 +64,7 @@ const TopNavHeader: React.FC<SelectedProps> = ({ selected }) => {
         <Logo size={20} color="#fff" iconOnly={true} />
         <span>
           {t("topNav.freeShipping")}
-          {convertPrice(65, currency.code)}
+          {ConvertPrice(65)}
         </span>
       </a>
       <a

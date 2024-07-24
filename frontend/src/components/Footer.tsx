@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
         </form>
       </div>
       <footer>
-        <div className="flex flex-row justify-between border-b border-gray-500">
+        <div className="flex flex-row justify-between border-b border-gray-500 gap-2 flex-wrap">
           <div className="footer-column flex flex-col gap-9">
             <Logo color="black" iconOnly={false} textOnly={false} size={60} />
             <div className="flex flex-row gap-5">

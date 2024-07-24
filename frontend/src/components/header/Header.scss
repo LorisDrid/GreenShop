@@ -1,7 +1,7 @@
-@import '../variables';
+@import '../../variables';
 
 header {
-  padding: 0 $body-margin-border;
+  padding: 0 var(--margin-body);
   background-color: $light-color;
   color: $dark-color;
   border-bottom: $primary-color 1px solid;
@@ -187,6 +187,12 @@ header {
     .header-logo svg {
       width: 90%;
       height: auto;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .header-button-container, .header-menu-button {
+      transform: scale(0.7);
     }
   }
 }

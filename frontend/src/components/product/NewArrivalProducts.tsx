@@ -3,9 +3,11 @@ import "./NewArrivalProducts.scss";
 import axios from "axios";
 import { Item } from "../../interfaces/Item";
 import Product from "./Product";
+import { useTranslation } from "react-i18next";
 
 function NewArrivalProducts() {
   const [items, setItems] = useState<Item[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -44,16 +46,14 @@ function NewArrivalProducts() {
 
   return (
     <section className="new-section-container flex flex-col justify-evenly gap-6">
-      <h2 className="section-title text-green">News Arrival</h2>
-      <p className="section-subtitle">
-        Be the first to have the first-call product
-      </p>
-      <div className="w-full flex justify-between gap-4">
+      <h2 className="section-title text-green">{t("product.newArrivals")}</h2>
+      <p className="section-subtitle">{t("product.newArrivalsSub")}</p>
+      <div className="grid grid-cols-4 grid-rows-1 gap-6 w-full max-xl:grid-cols-2 max-xl:grid-rows-2 max-md:grid-rows-4 max-md:grid-cols-1">
         {items.map((item: any, index: number) => (
           <Product item={item} key={index} />
         ))}
       </div>
-      <button className="btn-see-more">See More</button>
+      <button className="btn-see-more">{t("product.seeMore")}</button>
     </section>
   );
 }

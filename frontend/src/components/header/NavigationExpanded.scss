@@ -1,8 +1,8 @@
-@import '../variables';
+@import '../../variables';
 
 .navigation-expanded {
   position: fixed;
-  padding: $body-margin-border;
+  padding: var(--margin-body);
   top: 0;
   left: 0;
   right: 0;
@@ -50,8 +50,8 @@
 
   .close-menu-button {
     position: absolute;
-    top: calc(#{$body-margin-border} + 15px);
-    right: $body-margin-border;
+    top: calc(#{var(--margin-body)} + 15px);
+    right: var(--margin-body);
     cursor: pointer;
 
     .meat {

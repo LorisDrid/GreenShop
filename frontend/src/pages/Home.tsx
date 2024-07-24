@@ -1,26 +1,27 @@
 import React from "react";
-import Header from "../components/Header";
+import Header from "../components/header/Header";
 import Footer from "../components/Footer";
-import TopNavHeader, { NavOption } from "../components/TopNavBar";
+import TopNavHeader, { NavOption } from "../components/header/TopNavBar";
 import "./Home.scss";
-import imageProducts from "src/assets/products-home.jpg";
 import CategoriesGrid from "../components/CategoriesGrid";
 import MostWantedProducts from "../components/product/MostWantedProducts";
 import NewArrivalProducts from "../components/product/NewArrivalProducts";
 import Logo from "../assets/Logo";
 import WhyChooseGreenShop from "../components/WhyChooseGreenShop";
 import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 
 const Home: React.FC = () => {
   const { t } = useTranslation();
+  const currentLanguage = i18n.language;
 
   return (
-    <div className="home-container flex flex-col">
+    <div className={`home-container flex flex-col ${currentLanguage}`}>
       <TopNavHeader selected={NavOption.Shop} />
       <Header />
       <main className="flex-1">
-        <section className="home-hero-section flex justify-between items-center flex-wrap-reverse max-xl:justify-center">
-          <div className="home-hero-text flex justify-center items-center flex-col gap-6 relative">
+        <section className="home-hero-section flex justify-center items-center flex-wrap-reverse">
+          <div className="home-hero-text flex justify-center items-center flex-col gap-6 relative w-full">
             <h1 className="home-title">
               <svg
                 className="home-svg-arrow"
@@ -107,14 +108,26 @@ const Home: React.FC = () => {
               <br />
               {t("home.betterForThePlanet")}
             </h1>
-            <p className="home-subtitle">
-              {t("home.everyPurchase")}
-              <br />
-              {t("home.enhancing")}
-            </p>
+            <p className="home-subtitle">{t("home.everyPurchase")}</p>
             <button className="home-subtitle-btn">{t("home.shopNow")}</button>
           </div>
-          <img src={imageProducts} alt="Home" className="home-header-img" />
+
+          <div className="home-video-container">
+            <video
+              className="home-video"
+              autoPlay
+              loop
+              muted
+              width="100%"
+              height="100%"
+              role="presentation"
+            >
+              <source
+                data-src={require("../assets/greenshop-video.mp4")}
+                src={require("../assets/greenshop-video.mp4")}
+              />
+            </video>
+          </div>
         </section>
         <CategoriesGrid />
       </main>
@@ -127,6 +140,7 @@ const Home: React.FC = () => {
           width="444"
           height="61"
           fill="none"
+          className="home-signature"
         >
           <path
             fill="#124D00"

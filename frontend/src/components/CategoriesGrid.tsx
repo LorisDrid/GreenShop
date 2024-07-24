@@ -7,6 +7,7 @@ import booksImage from "src/assets/categories/books.jpg";
 import homeGoodsImage from "src/assets/categories/home-goods.jpg";
 import Logo from "../assets/Logo";
 import { Skeleton } from "@radix-ui/themes";
+import { useTranslation } from "react-i18next";
 
 interface Category {
   name: string;
@@ -16,15 +17,19 @@ interface Category {
 
 function CategoriesGrid() {
   const categories: Category[] = [
-    { name: "Clothing", image: clothingImage, href: "/clothing" },
-    { name: "Bathroom", image: bathroomImage, href: "/bathroom" },
-    { name: "Accessories", image: accessoriesImage, href: "/accessories" },
-    { name: "Books", image: booksImage, href: "/books" },
-    { name: "Home Goods", image: homeGoodsImage, href: "/home-goods" },
+    { name: "header.clothing", image: clothingImage, href: "/clothing" },
+    { name: "header.bath", image: bathroomImage, href: "/bathroom" },
+    {
+      name: "header.accessories",
+      image: accessoriesImage,
+      href: "/accessories",
+    },
+    { name: "header.books", image: booksImage, href: "/books" },
+    { name: "header.home", image: homeGoodsImage, href: "/home-goods" },
   ];
 
   return (
-    <div className="grid grid-cols-5 grid-rows-2 gap-7">
+    <div className="category-grid grid grid-cols-5 grid-rows-2 gap-7">
       {categories.map((category, index) => (
         <CategoryCard key={index} category={category} index={index} />
       ))}
@@ -39,6 +44,7 @@ interface CategoryCardProps {
 
 function CategoryCard({ category, index }: CategoryCardProps) {
   const [loading, setLoading] = React.useState(true);
+  const { t } = useTranslation();
 
   return (
     <Skeleton className="border-r-4" loading={loading}>
@@ -50,7 +56,7 @@ function CategoryCard({ category, index }: CategoryCardProps) {
           onLoad={() => setLoading(false)}
         />
         <button className="category-shop-btn">Shop</button>
-        <button className="category-name">{category.name}</button>
+        <button className="category-name">{t(category.name)}</button>
         <div className="category-logo">
           <Logo size={35} color="white" iconOnly={true} />
         </div>

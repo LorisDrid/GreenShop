@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./Product.scss";
 import { Item } from "../../interfaces/Item";
 import Reviews from "../../assets/Stars";
-import { convertPrice } from "../../utils/CurrencyUtils";
-import { useCurrency } from "../../contexts/LanguagesCurrencyContext";
+import { ConvertPrice } from "../../utils/CurrencyUtils";
 import {
   Avatar,
   Box,
@@ -14,32 +13,35 @@ import {
   Text,
 } from "@radix-ui/themes";
 import Logo from "../../assets/Logo";
+import { useTranslation } from "react-i18next";
 
 interface ProductProps {
   item: Item;
 }
 
 const Product: React.FC<ProductProps> = ({ item }) => {
-  const { currency } = useCurrency();
   const [imageLoading, setImageLoading] = useState(true);
+  const { t } = useTranslation();
 
   return (
     <article className="product">
       <Skeleton className="border-r-4" loading={imageLoading}>
-        <a href="" className="product-image-container">
-          <img
-            src={require(`../../assets/products/${item.image}`)}
-            alt={item.name}
-            className="product-image"
-            onLoad={() => setImageLoading(false)}
-          />
-        </a>
-        <button className="product-btn-favorite">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="45">
-            <path d="M42.25 3.8A12.09 12.09 0 0 0 34.38.93a12.33 12.33 0 0 0-10.36 5.65A12.33 12.33 0 0 0 13.78.89c-.75 0-1.5.08-2.26.22-3.87.73-6.9 2.94-9.04 6.56-3.04 5.2-3.28 9.99-.74 14.66A39 39 0 0 0 7.2 29.8c4.22 4.66 9.21 9.08 15.73 13.91.34.26.71.39 1.1.39.58 0 .98-.31 1.2-.5A109.26 109.26 0 0 0 39.76 31c2.24-2.37 4.78-5.28 6.63-8.9.78-1.53 1.67-3.58 1.62-5.89a16.17 16.17 0 0 0-5.75-12.4ZM44 20.8c-1.7 3.3-4.08 6.03-6.18 8.25A105.9 105.9 0 0 1 24 41.1C17.87 36.5 13.14 32.3 9.14 27.9a36.21 36.21 0 0 1-5.06-6.95c-2.05-3.76-1.83-7.52.7-11.83a10.4 10.4 0 0 1 9-5.44c3.67 0 6.92 2.1 8.68 5.6l.37.72c.23.45.69.74 1.18.74h.02c.5-.01.97-.31 1.19-.78.64-1.35 1.34-2.4 2.19-3.3a9.67 9.67 0 0 1 6.97-2.95c2.27 0 4.46.8 6.15 2.25a13.44 13.44 0 0 1 4.78 10.32c.04 1.65-.64 3.2-1.3 4.5Z" />
-          </svg>
-        </button>
-        <button className="product-btn-add">Quick Add</button>
+        <div className="relative">
+          <a href="" className="product-image-container">
+            <img
+              src={require(`../../assets/products/${item.image}`)}
+              alt={item.name}
+              className="product-image"
+              onLoad={() => setImageLoading(false)}
+            />
+          </a>
+          <button className="product-btn-favorite">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="45">
+              <path d="M42.25 3.8A12.09 12.09 0 0 0 34.38.93a12.33 12.33 0 0 0-10.36 5.65A12.33 12.33 0 0 0 13.78.89c-.75 0-1.5.08-2.26.22-3.87.73-6.9 2.94-9.04 6.56-3.04 5.2-3.28 9.99-.74 14.66A39 39 0 0 0 7.2 29.8c4.22 4.66 9.21 9.08 15.73 13.91.34.26.71.39 1.1.39.58 0 .98-.31 1.2-.5A109.26 109.26 0 0 0 39.76 31c2.24-2.37 4.78-5.28 6.63-8.9.78-1.53 1.67-3.58 1.62-5.89a16.17 16.17 0 0 0-5.75-12.4ZM44 20.8c-1.7 3.3-4.08 6.03-6.18 8.25A105.9 105.9 0 0 1 24 41.1C17.87 36.5 13.14 32.3 9.14 27.9a36.21 36.21 0 0 1-5.06-6.95c-2.05-3.76-1.83-7.52.7-11.83a10.4 10.4 0 0 1 9-5.44c3.67 0 6.92 2.1 8.68 5.6l.37.72c.23.45.69.74 1.18.74h.02c.5-.01.97-.31 1.19-.78.64-1.35 1.34-2.4 2.19-3.3a9.67 9.67 0 0 1 6.97-2.95c2.27 0 4.46.8 6.15 2.25a13.44 13.44 0 0 1 4.78 10.32c.04 1.65-.64 3.2-1.3 4.5Z" />
+            </svg>
+          </button>
+          <button className="product-btn-add">{t("product.btn.add")}</button>
+        </div>
       </Skeleton>
       <div className="product-content">
         <a href="" className="product-title">
@@ -53,17 +55,15 @@ const Product: React.FC<ProductProps> = ({ item }) => {
             {item.previousPrice > 0 ? (
               <>
                 <p className="product-previous-price">
-                  {convertPrice(item.previousPrice, currency.code)}
+                  {ConvertPrice(item.previousPrice)}
                 </p>
                 <p className="product-price-discount">
-                  {convertPrice(item.price, currency.code)}
+                  {ConvertPrice(item.price)}
                 </p>
               </>
             ) : (
               <>
-                <p className="product-price">
-                  {convertPrice(item.price, currency.code)}
-                </p>
+                <p className="product-price">{ConvertPrice(item.price)}</p>
               </>
             )}
           </div>
@@ -101,7 +101,7 @@ const Product: React.FC<ProductProps> = ({ item }) => {
               className="product-label-compare cursor-pointer"
               htmlFor={`ripple-on-${item._id}`}
             >
-              Compare footprint
+              {t("product.btn.compareFootprint")}
             </label>
           </div>
           <div className="flex justify-end gap-2 w-fit">

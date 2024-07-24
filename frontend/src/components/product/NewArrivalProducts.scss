@@ -1,7 +1,7 @@
 @import '../../variables';
 
 .new-section-container {
-  padding: $body-margin-border;
+  padding: var(--margin-body);
   background-color: $light-color;
 
   .section-title {

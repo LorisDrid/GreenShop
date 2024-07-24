@@ -3,9 +3,11 @@ import "./MostWantedProducts.scss";
 import axios from "axios";
 import { Item } from "../../interfaces/Item";
 import Product from "./Product";
+import { useTranslation } from "react-i18next";
 
 function MostWantedProducts() {
   const [items, setItems] = useState<Item[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -30,7 +32,7 @@ function MostWantedProducts() {
         console.error("Error fetching items:", error);
       }
     };
-    fetchItems().then((items) => console.log("Items fetched", items));
+    fetchItems().then(() => {});
   }, []);
 
   if (items.length === 0) {
@@ -39,9 +41,9 @@ function MostWantedProducts() {
 
   return (
     <section className="section-container flex flex-col justify-evenly items-center gap-6">
-      <h2 className="section-title text-green">Our Most Wanted Products</h2>
-      <p className="section-subtitle">Good for Environment, Good for You</p>
-      <div className="w-full flex justify-between gap-4">
+      <h2 className="section-title text-green">{t("product.mostWanted")}</h2>
+      <p className="section-subtitle">{t("product.mostWantedSub")}</p>
+      <div className="grid grid-cols-4 grid-rows-1 gap-6 w-full max-xl:grid-cols-2 max-xl:grid-rows-2 max-md:grid-rows-4 max-md:grid-cols-1">
         {items.map((item: any, index: number) => (
           <Product item={item} key={index} />
         ))}

@@ -55,7 +55,7 @@ function WhyChooseGreenShop() {
         <Logo color="white" textOnly={true} size={75} />
         <h1>?</h1>
       </span>
-      <div className="green-card-container grid grid-cols-4">
+      <div className="green-card-container grid grid-cols-4 grid-rows-1 gap-6 w-full max-xl:grid-cols-2 max-xl:grid-rows-2 max-md:grid-rows-4 max-md:grid-cols-1">
         {greenCards.map((card, index) => (
           <div key={index} className="green-card flex items-center flex-col">
             <span className="relative">

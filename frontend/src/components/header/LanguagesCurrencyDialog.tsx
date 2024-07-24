@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../Footer.scss";
-import {AlertDialog, Flex} from "@radix-ui/themes";
+import { AlertDialog, Flex } from "@radix-ui/themes";
 import {
   currencies,
   Currency,
@@ -9,8 +9,7 @@ import {
   useCurrency,
   useLanguage,
 } from "../../contexts/LanguagesCurrencyContext";
-import i18n from "i18next";
-import {closeNavigationExpanded} from "./NavigationExpanded";
+import { closeNavigationExpanded } from "./NavigationExpanded";
 import "./LanguagesCurrencyDialog.scss";
 import Logo from "../../assets/Logo";
 
@@ -28,9 +27,6 @@ const LanguagesCurrencyDialog: React.FC<LanguagesCurrencyDialogProps> = ({
 
   const changeLanguage = (language: LabelCode) => {
     setLanguage(language);
-    i18n.changeLanguage(language.code).then(() => {
-      // Nothing to do here
-    });
   };
 
   const changeCurrency = (currency: Currency) => {
@@ -70,7 +66,7 @@ const LanguagesCurrencyDialog: React.FC<LanguagesCurrencyDialogProps> = ({
               <p className="w-fit mr-2 font-medium">{language.label}</p>
             )}
             <img
-                src={require("../../assets/languages/" + language.code + ".svg")}
+              src={require("../../assets/languages/" + language.code + ".svg")}
               alt="Languages selection button"
               width="32"
               height="32"
@@ -88,7 +84,8 @@ const LanguagesCurrencyDialog: React.FC<LanguagesCurrencyDialogProps> = ({
             <div className="flex">
               <span className="text-center border-r border-gray-200">
                 <p className="font-bold  my-5 mx-8">
-                  Please choose your <br/><span className="language-text">Language</span>
+                  Please choose your <br />
+                  <span className="language-text">Language</span>
                 </p>
                 {languages.map((lang) => (
                   <span
@@ -100,7 +97,9 @@ const LanguagesCurrencyDialog: React.FC<LanguagesCurrencyDialogProps> = ({
                     onClick={() => changeLanguage(lang)}
                   >
                     <img
-                        src={require("../../assets/languages/" + lang.code + ".svg")}
+                      src={require(
+                        "../../assets/languages/" + lang.code + ".svg",
+                      )}
                       alt="Languages selection button"
                       width="30"
                       height="30"
@@ -111,7 +110,8 @@ const LanguagesCurrencyDialog: React.FC<LanguagesCurrencyDialogProps> = ({
               </span>
               <span className="text-center">
                 <p className="font-bold my-5 mx-8">
-                  Please choose your <br/><span className="currency-text">Currency</span>
+                  Please choose your <br />
+                  <span className="currency-text">Currency</span>
                 </p>
                 {currencies.map((curr) => (
                   <span
@@ -124,7 +124,7 @@ const LanguagesCurrencyDialog: React.FC<LanguagesCurrencyDialogProps> = ({
                   >
                     <img
                       src={require(
-                          "../../assets/currencies/" + curr.code + ".svg",
+                        "../../assets/currencies/" + curr.code + ".svg",
                       )}
                       alt="Currencies selection button"
                       height="20"

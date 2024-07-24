@@ -55,7 +55,8 @@
     bottom: 0;
     height: 2px;
     background-color: $light-color;
-    transition: left 0.3s ease, width 0.3s ease;
+    transition: left 0.3s ease, width 0.4s ease;
+    pointer-events: none;
   }
 
   .topNavBar-newsletter svg {

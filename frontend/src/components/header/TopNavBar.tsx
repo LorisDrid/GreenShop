@@ -1,8 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./TopNavBar.scss";
 import Logo from "../../assets/Logo";
-import {ConvertPrice} from "../../utils/CurrencyUtils";
-import {useTranslation} from "react-i18next";
+import { ConvertPrice } from "../../utils/CurrencyUtils";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../contexts/LanguagesCurrencyContext";
 
 export enum NavOption {
   Shop = "topNav.shop",
@@ -15,6 +16,16 @@ interface SelectedProps {
   selected: NavOption;
 }
 
+const useIsMounted = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  return isMounted;
+};
+
 const TopNavHeader: React.FC<SelectedProps> = ({ selected }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [hoveredTab, setHoveredTab] = useState(-1);
@@ -22,23 +33,34 @@ const TopNavHeader: React.FC<SelectedProps> = ({ selected }) => {
   const tabs = Object.values(NavOption);
   const tabRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const { t } = useTranslation();
+  const { language } = useLanguage();
+  const isMounted = useIsMounted();
+
+  const updateUnderline = (index: number) => {
+    console.log("Update underline", index);
+    const element = tabRefs.current[index];
+    if (element && underlineRef.current) {
+      underlineRef.current.style.width = `${element.offsetWidth}px`;
+      underlineRef.current.style.left = `${element.offsetLeft}px`;
+    }
+  };
 
   useEffect(() => {
     if (hoveredTab !== -1) {
-      const hoveredElement = tabRefs.current[hoveredTab];
-      if (hoveredElement && underlineRef.current) {
-        underlineRef.current.style.width = `${hoveredElement.offsetWidth}px`;
-        underlineRef.current.style.left = `${hoveredElement.offsetLeft}px`;
-      }
+      updateUnderline(hoveredTab);
     } else {
-      const activeElement = tabRefs.current[activeTab];
-      if (activeElement && underlineRef.current) {
-        underlineRef.current.style.width = `${activeElement.offsetWidth}px`;
-        underlineRef.current.style.left = `${activeElement.offsetLeft}px`;
-      }
+      updateUnderline(activeTab);
     }
   }, [hoveredTab, activeTab]);
-  //<div columns="3" width="auto" className="topNavBar">
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (isMounted) {
+        updateUnderline(activeTab);
+      }
+    }, 100);
+  }, [isMounted, language, activeTab]);
+
   return (
     <div className="topNavBar grid grid-cols-3">
       <span className="tabs-container">

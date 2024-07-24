@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import i18n from "i18next";
 
 export interface LabelCode {
   code: string;
@@ -121,6 +122,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     localStorage.setItem("language", language.code);
+    i18n.changeLanguage(language.code).then(() => {});
   }, [language]);
 
   return (

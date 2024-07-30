@@ -36,6 +36,9 @@ mongoose
     const labelsRouter = require("./routes/labels");
     app.use("/labels", labelsRouter);
 
+    const carbonFootprintRouter = require("./routes/carbon_footprint");
+    app.use("/api/carbon", carbonFootprintRouter);
+
     app.listen(port, () => {
       console.log(`✅ Server is running on port ${port}`);
     });

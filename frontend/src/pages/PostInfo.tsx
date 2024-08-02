@@ -46,7 +46,6 @@ const PostInfo = () => {
   useEffect(() => {
     getPost(slug).then((post) => setPost(post));
     getRelatedPosts(slug).then((posts) => setSuggestedPosts(posts));
-    console.log(suggestedPosts);
   }, [slug]);
 
   const cleanHTML = DOMPurify.sanitize(post?.content || "");
@@ -92,9 +91,7 @@ const PostInfo = () => {
                   </div>
                 </div>
                 <hr className="w-full border-t border-zinc-300 pb-8 " />
-                <div
-                  dangerouslySetInnerHTML={{ __html: post.content ?? "" }}
-                ></div>
+                <div dangerouslySetInnerHTML={{ __html: cleanHTML }}></div>
               </>
             )}
             <div className="mx-auto mt-8 w-full">

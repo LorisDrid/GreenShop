@@ -1,9 +1,11 @@
 // app.js
-require("dotenv").config();
+const dotenv = require("dotenv");
+const path = require("path");
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
-
+const env = process.env.NODE_ENV || "development";
+dotenv.config({ path: path.resolve(__dirname, `.env.${env}`) });
 const app = express();
 const port = process.env.PORT;
 const mongoURI = process.env.MONGODB_URI;
@@ -35,6 +37,9 @@ mongoose
 
     const labelsRouter = require("./routes/labels");
     app.use("/labels", labelsRouter);
+
+    const postsRouter = require("./routes/posts");
+    app.use("/posts", postsRouter);
 
     const carbonFootprintRouter = require("./routes/carbon_footprint");
     app.use("/api/carbon", carbonFootprintRouter);

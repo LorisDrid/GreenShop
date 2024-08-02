@@ -4,13 +4,19 @@ import Logo from "../../assets/Logo";
 import { ConvertPrice } from "../../utils/CurrencyUtils";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../contexts/LanguagesCurrencyContext";
+import { Link } from "react-router-dom";
 
-export enum NavOption {
-  Shop = "topNav.shop",
-  Simulator = "topNav.simulator",
-  Blog = "topNav.blog",
-  OurStory = "topNav.ourStory",
+export interface NavOption {
+  label: string;
+  href: string;
 }
+
+export const NavOption: Record<string, NavOption> = {
+  Shop: { label: "topNav.shop", href: "/" },
+  Simulator: { label: "topNav.simulator", href: "/simulator" },
+  Blog: { label: "topNav.blog", href: "/blog" },
+  OurStory: { label: "topNav.ourStory", href: "/our-story" },
+};
 
 interface SelectedProps {
   selected: NavOption;
@@ -27,7 +33,10 @@ const useIsMounted = () => {
 };
 
 const TopNavHeader: React.FC<SelectedProps> = ({ selected }) => {
-  const [activeTab, setActiveTab] = useState(0);
+  // Get the index of the active tab in the enum
+  const index = Object.values(NavOption).indexOf(selected);
+
+  const [activeTab, setActiveTab] = useState(index);
   const [hoveredTab, setHoveredTab] = useState(-1);
   const underlineRef = useRef<HTMLDivElement>(null);
   const tabs = Object.values(NavOption);
@@ -37,7 +46,6 @@ const TopNavHeader: React.FC<SelectedProps> = ({ selected }) => {
   const isMounted = useIsMounted();
 
   const updateUnderline = (index: number) => {
-    console.log("Update underline", index);
     const element = tabRefs.current[index];
     if (element && underlineRef.current) {
       underlineRef.current.style.width = `${element.offsetWidth}px`;
@@ -65,22 +73,22 @@ const TopNavHeader: React.FC<SelectedProps> = ({ selected }) => {
     <div className="topNavBar grid grid-cols-3">
       <span className="tabs-container">
         {tabs.map((option, index) => (
-          <a
-            key={option}
+          <Link
+            key={option.href}
             ref={(el) => (tabRefs.current[index] = el)}
-            href={`/${option.toLowerCase().replace(/\s+/g, "-")}`}
+            to={`${option.href}`}
             className={selected === option ? "tab selected" : "tab"}
             onClick={() => setActiveTab(index)}
             onMouseEnter={() => setHoveredTab(index)}
             onMouseLeave={() => setHoveredTab(-1)}
           >
-            {t(option)}
-          </a>
+            {t(option.label)}
+          </Link>
         ))}
         <div className="underline" ref={underlineRef}></div>
       </span>
-      <a
-        href="/shipping"
+      <Link
+        to="/shipping"
         className="flex flex-row justify-center gap-2 items-center"
       >
         <Logo size={20} color="#fff" iconOnly={true} />
@@ -88,7 +96,7 @@ const TopNavHeader: React.FC<SelectedProps> = ({ selected }) => {
           {t("topNav.freeShipping")}
           {ConvertPrice(65)}
         </span>
-      </a>
+      </Link>
       <a
         href="/newsletter"
         className="topNavBar-newsletter flex flex-row justify-end gap-2 items-center"

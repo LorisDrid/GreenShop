@@ -78,7 +78,6 @@ const CurrencyContext = createContext<CurrencyContextProps | undefined>(
 
 export const CurrencyProvider = ({ children }: { children: ReactNode }) => {
   const [currency, setCurrency] = useState(() => {
-    console.log("Local storage currency: ", localStorage.getItem("currency"));
     const savedCurrencyCode = localStorage.getItem("currency");
     return savedCurrencyCode
       ? currencies.find((c) => c.code === savedCurrencyCode) || currencies[0]

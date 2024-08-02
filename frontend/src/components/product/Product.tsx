@@ -27,7 +27,7 @@ const Product: React.FC<ProductProps> = ({ item }) => {
     <article className="product">
       <Skeleton className="border-r-4" loading={imageLoading}>
         <div className="relative">
-          <a href="" className="product-image-container">
+          <a href="/" className="product-image-container">
             <img
               src={require(`../../assets/products/${item.image}`)}
               alt={item.name}
@@ -44,11 +44,11 @@ const Product: React.FC<ProductProps> = ({ item }) => {
         </div>
       </Skeleton>
       <div className="product-content">
-        <a href="" className="product-title">
+        <a href="/" className="product-title">
           {item.name}
         </a>
         <span className="flex justify-between">
-          <a href="">
+          <a href="/">
             <Reviews rating={item.rate} numberOfReviews={item.rateCount} />
           </a>
           <div className="flex gap-2 items-end">

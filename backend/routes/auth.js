@@ -74,7 +74,7 @@ router.post("/signup", async (req, res) => {
   // console.log(`Received signup request for email: ${email}`);
 
   if (!["seller", "buyer", "administrator"].includes(role)) {
-    console.log(`Invalid role provided: ${role}`);
+    console.error(`Invalid role provided: ${role}`);
     return res.status(400).json({ error: "Invalid role" });
   }
 
@@ -82,13 +82,13 @@ router.post("/signup", async (req, res) => {
     role === "administrator" &&
     adminSecret !== process.env.ADMIN_SECRET_KEY
   ) {
-    console.log(`Invalid admin secret provided`);
+    console.error(`Invalid admin secret provided`);
     return res.status(403).json({ error: "Invalid admin secret" });
   }
 
   const validationError = validatePassword(password);
   if (validationError) {
-    console.log(`Validation error: ${validationError.error}`);
+    console.error(`Validation error: ${validationError.error}`);
     return res.status(400).json({ error: validationError });
   }
 

@@ -50,19 +50,19 @@ const Footer: React.FC = () => {
               />
             </div>
             <div className="flex flex-row gap-3">
-              <a href="#">
+              <a href="/">
                 <img
                   src={require("../assets/footer/whatsapp.png")}
                   alt="WhatsApp"
                 />
               </a>
-              <a href="#">
+              <a href="/">
                 <img
                   src={require("../assets/footer/instagram.png")}
                   alt="Instagram"
                 />
               </a>
-              <a href="#">
+              <a href="/">
                 <img
                   src={require("../assets/footer/facebook.png")}
                   alt="Facebook"
@@ -74,19 +74,19 @@ const Footer: React.FC = () => {
             <h3>{t("footer.aboutUs")}</h3>
             <ul className="flex flex-col gap-2">
               <li>
-                <a href="#">{t("footer.contactUs")}</a>
+                <a href="/">{t("footer.contactUs")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.faqs")}</a>
+                <a href="/">{t("footer.faqs")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.impact")}</a>
+                <a href="/">{t("footer.impact")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.ourStory")}</a>
+                <a href="/">{t("footer.ourStory")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.blog")}</a>
+                <a href="/">{t("footer.blog")}</a>
               </li>
             </ul>
           </div>
@@ -94,25 +94,25 @@ const Footer: React.FC = () => {
             <h3>{t("footer.categories")}</h3>
             <ul className="flex flex-col gap-2">
               <li>
-                <a href="#">{t("footer.new")}</a>
+                <a href="/">{t("footer.new")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.clothing")}</a>
+                <a href="/">{t("footer.clothing")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.bathBedding")}</a>
+                <a href="/">{t("footer.bathBedding")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.homeGoods")}</a>
+                <a href="/">{t("footer.homeGoods")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.furniture")}</a>
+                <a href="/">{t("footer.furniture")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.accessories")}</a>
+                <a href="/">{t("footer.accessories")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.gift")}</a>
+                <a href="/">{t("footer.gift")}</a>
               </li>
             </ul>
           </div>
@@ -120,19 +120,19 @@ const Footer: React.FC = () => {
             <h3>{t("footer.support")}</h3>
             <ul className="flex flex-col gap-2">
               <li>
-                <a href="#">{t("footer.shipping")}</a>
+                <a href="/">{t("footer.shipping")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.returns")}</a>
+                <a href="/">{t("footer.returns")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.privacyPolicy")}</a>
+                <a href="/">{t("footer.privacyPolicy")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.termsOfUse")}</a>
+                <a href="/">{t("footer.termsOfUse")}</a>
               </li>
               <li>
-                <a href="#">{t("footer.affiliates")}</a>
+                <a href="/">{t("footer.affiliates")}</a>
               </li>
             </ul>
           </div>
@@ -140,7 +140,7 @@ const Footer: React.FC = () => {
             <h3>{t("footer.newsletterHeader")}</h3>
             <p>{t("footer.newsletterTextMain")}</p>
             <br />
-            <a href="#">{t("footer.subscribeLink")}</a>
+            <a href="/">{t("footer.subscribeLink")}</a>
           </div>
         </div>
         <div className="footer-copyright text-center">

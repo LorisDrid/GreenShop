@@ -5,6 +5,7 @@ interface LogoProps {
   color?: string;
   iconOnly?: boolean;
   textOnly?: boolean;
+  text?: string;
 }
 
 const Logo: React.FC<LogoProps> = ({
@@ -12,6 +13,7 @@ const Logo: React.FC<LogoProps> = ({
   color = "white",
   iconOnly = false,
   textOnly = false,
+  text = "Shop",
 }) => {
   if (textOnly) {
     return (

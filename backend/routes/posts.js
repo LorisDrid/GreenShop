@@ -6,7 +6,6 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const posts = await Post.find().populate("author");
-    console.log(posts);
     res.json(posts);
   } catch (error) {
     console.error("Error fetching posts:", error);
@@ -80,11 +79,15 @@ router.get("/author/:slug", async (req, res) => {
 // Récupérer les posts d'un auteur par slug
 router.get("/author/:slug/posts", async (req, res) => {
   const { slug } = req.params;
-
   try {
-    const posts = await Post.find({ "metadata.author.slug": slug }).populate(
-      "author",
-    );
+    const author = await Author.findOne({ slug: slug }).exec();
+
+    if (!author) {
+      return res.status(404).json({ error: "Author not found" });
+    }
+
+    const posts = await Post.find({ author: author._id }).populate("author");
+
     res.json(posts);
   } catch (error) {
     console.error("Error fetching author posts:", error);

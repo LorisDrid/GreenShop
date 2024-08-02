@@ -91,7 +91,7 @@ const LanguagesCurrencyDialog: React.FC<LanguagesCurrencyDialogProps> = ({
                   <span
                     className={
                       "option flex gap-4 flex-row " +
-                      (lang == language && "language-selected")
+                      (lang === language && "language-selected")
                     }
                     key={lang.code}
                     onClick={() => changeLanguage(lang)}
@@ -117,7 +117,7 @@ const LanguagesCurrencyDialog: React.FC<LanguagesCurrencyDialogProps> = ({
                   <span
                     className={
                       "option flex gap-4 flex-row " +
-                      (curr == currency && "currency-selected")
+                      (curr === currency && "currency-selected")
                     }
                     key={curr.code}
                     onClick={() => changeCurrency(curr)}

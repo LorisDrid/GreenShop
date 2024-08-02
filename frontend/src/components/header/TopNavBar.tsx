@@ -6,12 +6,12 @@ import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../contexts/LanguagesCurrencyContext";
 import { Link } from "react-router-dom";
 
-export interface NavOption {
+export interface option {
   label: string;
   href: string;
 }
 
-export const NavOption: Record<string, NavOption> = {
+export const NavOption: Record<string, option> = {
   Shop: { label: "topNav.shop", href: "/" },
   Simulator: { label: "topNav.simulator", href: "/simulator" },
   Blog: { label: "topNav.blog", href: "/blog" },
@@ -19,7 +19,7 @@ export const NavOption: Record<string, NavOption> = {
 };
 
 interface SelectedProps {
-  selected: NavOption;
+  selected: option;
 }
 
 const useIsMounted = () => {

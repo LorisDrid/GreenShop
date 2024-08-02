@@ -7,6 +7,7 @@ import axios from "axios";
 import ArrowLeft from "../components/blog/ArrowLeft";
 import Tag from "../components/blog/Tag";
 import { useParams } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 async function getPost(slug: string): Promise<Post> {
   try {
@@ -44,9 +45,11 @@ const PostInfo = () => {
 
   useEffect(() => {
     getPost(slug).then((post) => setPost(post));
-    console.log("Post", post);
     getRelatedPosts(slug).then((posts) => setSuggestedPosts(posts));
-  }, []);
+    console.log(suggestedPosts);
+  }, [slug]);
+
+  const cleanHTML = DOMPurify.sanitize(post?.content || "");
 
   return (
     <>
@@ -102,12 +105,9 @@ const PostInfo = () => {
                     Suggested Posts
                   </h3>
                   <div className="flex flex-col space-x-0 space-y-4 md:flex-row md:space-x-4 md:space-y-0">
-                    {suggestedPosts
-                      .filter((nextPost) => nextPost?.id !== post?.id)
-                      .slice(0, 2)
-                      .map((post) => {
-                        return <SuggestedPostCard key={post.id} post={post} />;
-                      })}
+                    {suggestedPosts.slice(0, 2).map((post) => {
+                      return <SuggestedPostCard key={post.id} post={post} />;
+                    })}
                   </div>
                 </div>
               )}

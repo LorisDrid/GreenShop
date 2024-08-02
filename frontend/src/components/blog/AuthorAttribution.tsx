@@ -10,7 +10,7 @@ export default function AuthorAttribution({
     <div className="flex space-x-1">
       <span>by</span>
       <a
-        href={`/author/${post?.author?.slug}`}
+        href={`/blog/author/${post?.author?.slug}`}
         className="font-semibold text-green-600"
       >
         {post?.author?.title}

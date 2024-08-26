@@ -5,12 +5,14 @@ import Home from "./pages/Home";
 import Blog from "./pages/Blog";
 import PostInfo from "./pages/PostInfo";
 import AuthorInfo from "./pages/AuthorInfo";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="cart" element={<Cart />} />
         <Route path="blog" element={<Blog />} />
         <Route path="blog/:slug" element={<PostInfo />} />
         <Route path="blog/author/:slug" element={<AuthorInfo />} />

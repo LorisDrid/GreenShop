@@ -1,0 +1,46 @@
+@import '../variables';
+
+.modifyButton {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    padding: 4px;
+    border: 1px solid #000;
+    position: absolute;
+    top: 30px;
+    left: 61%;
+    transform: translateX(-50%);
+    object-fit: contain;
+    background: #FFFFFF;
+    transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+  
+    &:hover {
+      transform: translateX(-50%) scale(1.1);
+    }
+}
+
+.orders{
+    color: #007bff; /* Couleur du lien */
+    text-decoration: underline; /* Souligner le lien */
+    transition: transform 0.3s ease; /* Animation pour l'effet de grandissement */
+    display: inline-block;
+
+    &:hover {
+      transform: scale(1.05); /* Grandir le lien au survol */
+      transform-origin: center;
+    }
+}
+
+.logoutButton {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -5px); // Centrer horizontalement et remonter
+    transition: transform 0.3s ease; // Ajouter une transition pour le hover
+  
+    &:hover {
+      transform: translate(-50%, -5px) scale(1.05); /* Combiner les transformations */
+      transform-origin: center;
+    }
+  }

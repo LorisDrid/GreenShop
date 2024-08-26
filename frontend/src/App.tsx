@@ -6,6 +6,7 @@ import Blog from "./pages/Blog";
 import PostInfo from "./pages/PostInfo";
 import AuthorInfo from "./pages/AuthorInfo";
 import Cart from "./pages/Cart";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="blog" element={<Blog />} />
         <Route path="blog/:slug" element={<PostInfo />} />
         <Route path="blog/author/:slug" element={<AuthorInfo />} />

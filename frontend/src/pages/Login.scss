@@ -1,0 +1,101 @@
+// Style du conteneur principal avec l'effet de flou
+.login-container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.3); /* Fond semi-transparent */
+    backdrop-filter: blur(10px); /* Effet de flou */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+// Style pour le titre
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+// Style des champs de formulaire
+.login-container form div {
+    margin-bottom: 15px;
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+    font-weight: bold;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+
+.login-container input[type="email"]:hover,
+.login-container input[type="password"]:hover {
+  transform: scale(1.05);
+}
+
+// Style pour le bouton de connexion
+.login-container button[type="submit"] {
+    width: auto; /* Ajuste la largeur automatiquement en fonction du contenu */
+    padding: 10px 20px; /* Ajoute plus de padding pour une meilleure apparence */
+    background: linear-gradient(45deg, #4CAF50, #45a049); /* Dégradé de vert */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    margin: 0 auto; /* Centre horizontalement */
+    display: block; /* Assure que le bouton est centré */
+}
+
+.login-container button[type="submit"]:hover {
+    background: linear-gradient(45deg, #45a049, #4CAF50);
+    transform: scale(1.1);
+}
+
+// Style pour le message d'erreur
+.login-container p {
+    color: red;
+    text-align: center;
+    margin-top: 10px; 
+    margin-bottom: 10px; 
+  }
+
+// Style pour la page avec le background
+.page-container {
+    height: 100vh; /* S'assure que la page prend toute la hauteur de la fenêtre */
+    width: 100%;
+    background-image: url('../assets/login-background.gif'); /* Chemin de l'image */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center; /* Centre verticalement le contenu */
+    justify-content: center; /* Centre horizontalement le contenu */
+}
+
+.signup-link {
+    text-align: center; // Centre horizontalement le texte
+    margin-top: 20px; // Espace au-dessus du texte
+    color: #007bff; // Couleur du lien
+    font-size: 14px; // Taille du texte
+  
+    a {
+      text-decoration: underline; // Sous-ligner le lien
+      color: #007bff; // Couleur du lien
+      transition: color 0.3s ease; // Transition pour la couleur
+  
+      &:hover {
+        color: #0056b3; // Couleur du lien au survol
+      }
+    }
+  }

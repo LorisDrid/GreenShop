@@ -1,12 +1,14 @@
-// src/pages/Signup.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import styles from "./Signup.module.css";
+import "./Signup.scss"; // Assurez-vous que le chemin est correct
+import Footer from "../components/Footer";
 
-const SignupPage = () => {
+const SignupPage: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     phoneNumber: "",
@@ -30,10 +32,13 @@ const SignupPage = () => {
     setError(null);
 
     try {
-      await axios.post(
+      const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/auth/signup`,
         formData,
       );
+
+      // Log de la réponse du backend
+      console.log("Backend response:", response.data);
       navigate("/");
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
@@ -49,68 +54,95 @@ const SignupPage = () => {
   };
 
   return (
-    <div className={styles.pageContainer}>
-      <div className={styles.formContainer}>
-        <h1 className={styles.title}>Inscription</h1>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Mot de passe:
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Numéro de téléphone:
-            <input
-              type="text"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Rôle:
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              required
-            >
-              <option value="buyer">Buyer</option>
-              <option value="seller">Seller</option>
-              <option value="administrator">Administrator</option>
-            </select>
-          </label>
-          {formData.role === "administrator" && (
+    <>
+      <div className="page-container">
+        <div className="form-container">
+          <h1 className="title">Sign up</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="name-fields">
+              <label>
+                First Name:
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+              <label>
+                Last Name:
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+            </div>
             <label>
-              Clé d'administrateur:
+              Email:
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label>
+              Password:
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label>
+              Phone number:
               <input
                 type="text"
-                name="adminSecret"
-                value={formData.adminSecret}
+                name="phoneNumber"
+                value={formData.phoneNumber}
                 onChange={handleChange}
               />
             </label>
-          )}
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          <button type="submit">Signup</button>
-        </form>
+            <label>
+              Role:
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                required
+              >
+                <option value="buyer">Buyer</option>
+                <option value="seller">Seller</option>
+                <option value="administrator">Administrator</option>
+              </select>
+            </label>
+            {formData.role === "administrator" && (
+              <label>
+                Admin key:
+                <input
+                  type="text"
+                  name="adminSecret"
+                  value={formData.adminSecret}
+                  onChange={handleChange}
+                />
+              </label>
+            )}
+            {error && <p className="error-message">{error}</p>}
+            <button type="submit" className="signup-button">
+              Signup
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

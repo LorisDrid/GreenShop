@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
 import Footer from "../components/Footer";
 import TopNavHeader, { NavOption } from "../components/header/TopNavBar";
@@ -6,7 +8,33 @@ import defaultProfileImage from "../assets/default-profile.png";
 import "./Profile.scss";
 
 const Profile: React.FC = () => {
+  const [user, setUser] = useState<{
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    points: number;
+    profileImage: string;
+  } | null>(null);
+
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const navigate = useNavigate(); // Importez useNavigate pour la redirection
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/users/${userId}`)
+      .then((response) => {
+        setUser(response.data);
+        setSelectedImage(response.data.profileImage || defaultProfileImage);
+      })
+      .catch((error) => {
+        console.error(
+          "Erreur lors de la récupération des informations utilisateur",
+          error,
+        );
+      });
+  }, []);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -22,8 +50,11 @@ const Profile: React.FC = () => {
   };
 
   const handleLogout = () => {
-    // Implémentez la logique de déconnexion ici
-    alert("Déconnexion réussie");
+    // Supprimer le token du localStorage
+    localStorage.removeItem("accessToken");
+
+    // Rediriger vers la page d'accueil
+    navigate("/");
   };
 
   return (
@@ -43,24 +74,32 @@ const Profile: React.FC = () => {
             alt="Modify"
             className={"modifyButton"}
           />
-          <h2 style={nameStyles}>Gordon Ramsay</h2>
-          <div style={infoStyles}>
-            <p style={textInfoStyles}>
-              <strong>E-mail:</strong> gordon.ramsay@example.com
-            </p>
-            <p style={textInfoStyles}>
-              <strong>Phone:</strong> +123456789
-            </p>
-            <p style={textInfoStyles}>
-              <strong>Points:</strong> 2400
-            </p>
-            <p style={textInfoStyles}>
-              <strong style={{ marginRight: "8px" }}>Orders:</strong>{" "}
-              <a href="/orders" className={"orders"}>
-                click to see your orders
-              </a>
-            </p>
-          </div>
+          {user ? (
+            <>
+              <h2 style={nameStyles}>
+                {user.firstName} {user.lastName}
+              </h2>
+              <div style={infoStyles}>
+                <p style={textInfoStyles}>
+                  <strong>E-mail:</strong> {user.email}
+                </p>
+                <p style={textInfoStyles}>
+                  <strong>Phone:</strong> {user.phoneNumber}
+                </p>
+                <p style={textInfoStyles}>
+                  <strong>Points:</strong> {user.points}
+                </p>
+                <p style={textInfoStyles}>
+                  <strong style={{ marginRight: "8px" }}>Orders:</strong>{" "}
+                  <a href="/orders" className={"orders"}>
+                    click to see your orders
+                  </a>
+                </p>
+              </div>
+            </>
+          ) : (
+            <p>Loading...</p>
+          )}
           <img
             src={require("../assets/logout.png")}
             alt="Logout"
@@ -82,7 +121,7 @@ const profileContainerStyles: React.CSSProperties = {
   borderRadius: "10px",
   overflow: "hidden",
   boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-  height: "500px",
+  height: "550px",
 };
 
 const coverImageStyles: React.CSSProperties = {
@@ -121,6 +160,9 @@ const infoStyles: React.CSSProperties = {
   marginBottom: "20px",
   textAlign: "left",
   paddingLeft: "20px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
 };
 
 const textInfoStyles: React.CSSProperties = {

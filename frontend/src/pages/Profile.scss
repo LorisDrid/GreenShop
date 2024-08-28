@@ -32,15 +32,15 @@
 }
 
 .logoutButton {
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -5px); // Centrer horizontalement et remonter
-    transition: transform 0.3s ease; // Ajouter une transition pour le hover
-  
-    &:hover {
-      transform: translate(-50%, -5px) scale(1.05); /* Combiner les transformations */
-      transform-origin: center;
-    }
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 90%; /* Ajustez cette valeur pour déplacer le bouton vers le haut ou vers le bas */
+  left: 50%;
+  transform: translateX(-50%); /* Centrer horizontalement */
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateX(-50%) scale(1.05); /* Combiner les transformations */
   }
+}

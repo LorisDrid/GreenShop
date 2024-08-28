@@ -69,15 +69,28 @@ const validatePassword = (password) => {
 // };
 
 router.post("/signup", async (req, res) => {
-  const { email, phoneNumber, password, role, adminSecret } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    phoneNumber,
+    password,
+    role,
+    adminSecret,
+  } = req.body;
 
-  // console.log(`Received signup request for email: ${email}`);
+  // Vérifiez si tous les champs requis sont présents
+  if (!firstName || !lastName || !email || !phoneNumber || !password || !role) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
 
+  // Vérifiez la validité du rôle
   if (!["seller", "buyer", "administrator"].includes(role)) {
     console.error(`Invalid role provided: ${role}`);
     return res.status(400).json({ error: "Invalid role" });
   }
 
+  // Vérifiez le secret admin si le rôle est administrateur
   if (
     role === "administrator" &&
     adminSecret !== process.env.ADMIN_SECRET_KEY
@@ -86,6 +99,7 @@ router.post("/signup", async (req, res) => {
     return res.status(403).json({ error: "Invalid admin secret" });
   }
 
+  // Validez le mot de passe
   const validationError = validatePassword(password);
   if (validationError) {
     console.error(`Validation error: ${validationError.error}`);
@@ -93,20 +107,42 @@ router.post("/signup", async (req, res) => {
   }
 
   try {
+    // Hachez le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Créez un token de vérification
     const verificationToken = jwt.sign(
-      { email, phoneNumber, password: hashedPassword, role },
+      {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        password: hashedPassword,
+        role,
+      },
       process.env.JWT_SECRET,
       { expiresIn: "1h" },
     );
 
+    // Commenter l'envoi de l'email de vérification
     // console.log(`Sending verification email to: ${email}`);
     // await sendVerificationEmail(email, verificationToken);
 
-    res
-      .status(201)
-      .json({ message: "Verification email sent, please check your inbox." });
+    // Créez un nouvel utilisateur
+    const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      password: hashedPassword,
+      role,
+      points: 0, // Points par défaut
+      orders: [], // Liste des orders vide
+    });
+
+    await newUser.save();
+
+    res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     console.error("Error signing up:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -186,7 +222,7 @@ router.post("/login", bruteforce.prevent, async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, { httpOnly: true });
 
-    res.json({ accessToken });
+    res.json({ accessToken, userId: user._id });
   } catch (error) {
     console.error("Error logging in:", error);
     res.status(500).json({ error: "Internal server error" });

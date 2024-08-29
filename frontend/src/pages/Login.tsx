@@ -12,8 +12,15 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
-    if (token) {
-      navigate("/Home"); // Redirige vers /Home si l'utilisateur est déjà connecté
+    const userRole = localStorage.getItem("userRole");
+    if (token && userRole) {
+      if (userRole === "buyer") {
+        navigate("/home");
+      } else if (userRole === "seller") {
+        navigate("/supplier");
+      } else if (userRole === "administrator") {
+        navigate("/admin");
+      }
     }
   }, [navigate]);
 
@@ -30,8 +37,21 @@ const Login: React.FC = () => {
       // Stocker le token et l'ID utilisateur dans le localStorage
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("userId", response.data.userId);
+      localStorage.setItem("userRole", response.data.userType);
 
-      navigate("/Home");
+      // Vérifiez le type d'utilisateur
+      const userRole = response.data.userType;
+      console.log("user role : " + userRole);
+
+      if (userRole === "buyer") {
+        navigate("/Home");
+      } else if (userRole === "seller") {
+        navigate("/Supplier");
+      } else if (userRole === "administrator") {
+        navigate("/Admin");
+      } else {
+        setError("Unknown user type");
+      }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         if (err.response) {

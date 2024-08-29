@@ -4,10 +4,38 @@ const Item = require("../models/item"); // Importer le modèle Item
 
 // Créer un nouvel item
 router.post("/", async (req, res) => {
-  const { name, description, price, supplier } = req.body;
+  const {
+    name,
+    description,
+    price,
+    supplier,
+    image, // facultatif
+    greenScore,
+    weight_value,
+    weight_unit,
+    distance_value,
+    distance_unit,
+    transport_method,
+    labels,
+  } = req.body;
 
-  if (isNaN(price)) {
-    return res.status(400).json({ error: "Price must be a valid number" });
+  // Vérification de la validité des données
+  if (
+    !name ||
+    !description ||
+    isNaN(price) ||
+    !supplier ||
+    !greenScore ||
+    isNaN(weight_value) ||
+    !weight_unit ||
+    isNaN(distance_value) ||
+    !distance_unit ||
+    !transport_method ||
+    !Array.isArray(labels)
+  ) {
+    return res
+      .status(400)
+      .json({ error: "Missing required fields or invalid data" });
   }
 
   try {
@@ -16,16 +44,23 @@ router.post("/", async (req, res) => {
       description,
       price: parseFloat(price),
       supplier,
+      image: image || "No_Image_Available.jpg", // Valeur par défaut si l'image n'est pas fournie
+      greenScore,
+      weight_value: parseFloat(weight_value), // Valeur du poids
+      weight_unit: weight_unit, // Unité du poids
+      distance_value: parseFloat(distance_value), // Valeur de la distance
+      distance_unit: distance_unit, // Unité de la distance
+      transport_method,
+      labels,
     });
 
-    await newItem.save();
+    await newItem.save(); // Enregistrement dans la base de données
     res.status(201).json(newItem);
   } catch (error) {
     console.error("Error creating item:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 // Récupérer tous les items
 router.get("/", async (req, res) => {
   try {

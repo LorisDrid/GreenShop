@@ -1,0 +1,153 @@
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: fit-content;
+  }
+  
+  .form-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px); /* Effet de flou */
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .supplier-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+  }
+  
+  .form-group {
+    flex: 1;
+    margin-bottom: 15px;
+  }
+  
+  .form-group.last {
+    margin-bottom: 15px;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-input, .form-textarea, .form-select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  .form-textarea {
+    height: 100px;
+    resize: vertical;
+  }
+  
+  .input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-group .form-input {
+    flex: 2;
+    margin-right: 5px;
+  }
+  
+  .input-group .form-select {
+    flex: 1;
+  }
+  
+  .btn-submit {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-submit:hover {
+    background-color: #45a049;
+  }
+  
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+  }
+  
+  /* Styles pour la liste de sélection personnalisée */
+  .custom-select {
+    position: relative;
+  }
+  
+  .form-select option {
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Description cachée par défaut */
+  .label-description {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    z-index: 1000;
+    width: 100%;
+  }
+  
+  /* Changement de couleur et affichage de la description au survol de chaque option */
+  .form-select option:hover {
+    background-color: #f0f0f0;
+    color: #000;
+  }
+  
+  .form-select option:hover .label-description {
+    display: block;
+  }
+
+  .label-group {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .label-button {
+    margin: 5px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .label-button.selected {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .label-button:hover {
+    background-color: #e0e0e0;
+  }

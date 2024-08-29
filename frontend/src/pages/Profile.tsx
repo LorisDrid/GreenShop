@@ -18,7 +18,7 @@ const Profile: React.FC = () => {
   } | null>(null);
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const navigate = useNavigate(); // Importez useNavigate pour la redirection
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -36,24 +36,8 @@ const Profile: React.FC = () => {
       });
   }, []);
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setSelectedImage(reader.result as string);
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleLogout = () => {
-    // Supprimer le token du localStorage
     localStorage.removeItem("accessToken");
-
-    // Rediriger vers la page d'accueil
     navigate("/");
   };
 
@@ -61,51 +45,55 @@ const Profile: React.FC = () => {
     <>
       <TopNavHeader selected={NavOption.Shop} />
       <Header />
-      <div style={profileContainerStyles}>
-        <div style={coverImageStyles}></div>
-        <div style={profileContentStyles}>
-          <img
-            src={selectedImage || defaultProfileImage}
-            alt="Profile"
-            style={profileImageStyles}
-          />
-          <img
-            src={require("../assets/modify.png")}
-            alt="Modify"
-            className={"modifyButton"}
-          />
-          {user ? (
-            <>
-              <h2 style={nameStyles}>
-                {user.firstName} {user.lastName}
-              </h2>
-              <div style={infoStyles}>
-                <p style={textInfoStyles}>
-                  <strong>E-mail:</strong> {user.email}
-                </p>
-                <p style={textInfoStyles}>
-                  <strong>Phone:</strong> {user.phoneNumber}
-                </p>
-                <p style={textInfoStyles}>
-                  <strong>Points:</strong> {user.points}
-                </p>
-                <p style={textInfoStyles}>
-                  <strong style={{ marginRight: "8px" }}>Orders:</strong>{" "}
-                  <a href="/orders" className={"orders"}>
-                    click to see your orders
-                  </a>
-                </p>
-              </div>
-            </>
-          ) : (
-            <p>Loading...</p>
-          )}
-          <img
-            src={require("../assets/logout.png")}
-            alt="Logout"
-            className={"logoutButton"}
-            onClick={handleLogout}
-          />
+      <div style={pageBackgroundStyles}>
+        {" "}
+        {/* Apply the background style */}
+        <div style={profileContainerStyles}>
+          <div style={coverImageStyles}></div>
+          <div style={profileContentStyles}>
+            <img
+              src={selectedImage || defaultProfileImage}
+              alt="Profile"
+              style={profileImageStyles}
+            />
+            <img
+              src={require("../assets/modify.png")}
+              alt="Modify"
+              className={"modifyButton"}
+            />
+            {user ? (
+              <>
+                <h2 style={nameStyles}>
+                  {user.firstName} {user.lastName}
+                </h2>
+                <div style={infoStyles}>
+                  <p style={textInfoStyles}>
+                    <strong>E-mail:</strong> {user.email}
+                  </p>
+                  <p style={textInfoStyles}>
+                    <strong>Phone:</strong> {user.phoneNumber}
+                  </p>
+                  <p style={textInfoStyles}>
+                    <strong>Points:</strong> {user.points}
+                  </p>
+                  <p style={textInfoStyles}>
+                    <strong style={{ marginRight: "8px" }}>Orders:</strong>{" "}
+                    <a href="/orders" className={"orders"}>
+                      click to see your orders
+                    </a>
+                  </p>
+                </div>
+              </>
+            ) : (
+              <p>Loading...</p>
+            )}
+            <img
+              src={require("../assets/logout.png")}
+              alt="Logout"
+              className={"logoutButton"}
+              onClick={handleLogout}
+            />
+          </div>
         </div>
       </div>
       <Footer />
@@ -114,14 +102,24 @@ const Profile: React.FC = () => {
 };
 
 // Styles
+const pageBackgroundStyles: React.CSSProperties = {
+  backgroundImage: `url(${require("../assets/login-background.gif")})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  minHeight: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
 const profileContainerStyles: React.CSSProperties = {
-  maxWidth: "400px",
-  margin: "100px auto",
+  width: "450px",
   backgroundColor: "#fff",
   borderRadius: "10px",
   overflow: "hidden",
   boxShadow: "0 0 10px rgba(0,0,0,0.1)",
   height: "550px",
+  position: "relative",
 };
 
 const coverImageStyles: React.CSSProperties = {

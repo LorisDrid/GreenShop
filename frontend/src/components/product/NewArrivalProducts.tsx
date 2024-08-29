@@ -18,6 +18,7 @@ function NewArrivalProducts() {
           `${process.env.REACT_APP_BACKEND_URL}/items`,
         );
         const items: Item[] = response.data;
+        console.log(items);
         if (items.length > 0) {
           // Sort by the most recent
           items.sort((a, b) => {

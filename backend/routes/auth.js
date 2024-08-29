@@ -203,6 +203,7 @@ router.post("/login", bruteforce.prevent, async (req, res) => {
       {
         userId: user._id,
         email: user.email,
+        userRole: user.role, // Ajout du type d'utilisateur au token
       },
       process.env.JWT_SECRET,
       {
@@ -222,7 +223,8 @@ router.post("/login", bruteforce.prevent, async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, { httpOnly: true });
 
-    res.json({ accessToken, userId: user._id });
+    // Inclure le type d'utilisateur dans la réponse
+    res.json({ accessToken, userId: user._id, userType: user.role });
   } catch (error) {
     console.error("Error logging in:", error);
     res.status(500).json({ error: "Internal server error" });

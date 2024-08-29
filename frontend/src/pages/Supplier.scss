@@ -151,3 +151,17 @@
   .label-button:hover {
     background-color: #e0e0e0;
   }
+
+  .logoutButton {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 3.5%; /* Ajustez cette valeur pour déplacer le bouton vers le haut ou vers le bas */
+    left: 90%;
+    transform: translateX(-50%); /* Centrer horizontalement */
+    transition: transform 0.3s ease;
+  
+    &:hover {
+      transform: translateX(-50%) scale(1.05); /* Combiner les transformations */
+    }
+  }

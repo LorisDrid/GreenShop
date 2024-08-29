@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Supplier.scss";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -21,6 +22,7 @@ const Supplier: React.FC = () => {
     labels: [] as string[], // Labels sélectionnés
   });
 
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [allLabels, setAllLabels] = useState<{ _id: string; name: string }[]>(
     [],
@@ -49,6 +51,11 @@ const Supplier: React.FC = () => {
       ...prevFormData,
       [name]: value,
     }));
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/");
   };
 
   const handleLabelClick = (labelId: string) => {
@@ -131,6 +138,12 @@ const Supplier: React.FC = () => {
       <div className="page-container">
         <div className="form-container">
           <h2 className="title">Create New Item</h2>
+          <img
+            src={require("../assets/logout.png")}
+            alt="Logout"
+            className={"logoutButton"}
+            onClick={handleLogout}
+          />
           <form className="supplier-form" onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group">
